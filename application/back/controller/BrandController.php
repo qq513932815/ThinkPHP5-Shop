@@ -21,7 +21,7 @@ class BrandController extends Controller
     {
         $model = new BrandModel();
         //筛选
-        //拿到前台传递数据
+        //拿到传递数据
         $filter = input('filter/a');
         $filter_order = [];
         if(isset($filter['title']) && ''!=$filter['title'])

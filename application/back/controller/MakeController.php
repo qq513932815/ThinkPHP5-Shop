@@ -28,10 +28,16 @@ class MakeController extends Controller
         $sql = "SELECT TABLE_COMMENT FROM information_schema.`TABLES` WHERE TABLE_SCHEMA=? AND TABLE_NAME=?";
         $table_schema = Config::get('database.database');
         $table_name = Config::get('database.prefix').$table;
-        $result = Db::query($sql,[$table_schema,$table_name]);
-        //SELECT TABLE_NAME,COLUMN_NAME,COLUMN_COMMENT FROM information_schema.`COLUMNS` WHERE TABLE_SCHEMA='myshop' AND TABLE_NAME='shop_member'
+        $tb_result = Db::query($sql,[$table_schema,$table_name]);
+        //
+
+        $sql = "SELECT COLUMN_NAME,COLUMN_COMMENT FROM information_schema.`COLUMNS` WHERE TABLE_SCHEMA=? AND TABLE_NAME=?";
+        $col = Db::query($sql,[$table_schema,$table_name]);
+
         return [
-            'comment' => $result[0]['TABLE_COMMENT']
+            'comment' => $tb_result[0]['TABLE_COMMENT'],
+            'field'=>$col,
+            'table_name'=>$table
         ];
     }
 }

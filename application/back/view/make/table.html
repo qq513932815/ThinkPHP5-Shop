@@ -27,7 +27,7 @@
                     <a href="javascript:void(0);" data-toggle="tooltip" title="信息" id="btn-info" class="btn btn-success">
                         <i class="fa fa-info"></i>
                     </a>
-                    <button type="submit" form="form-create" data-toggle="tooltip" title="生成代码" class="btn btn-primary">
+                    <button type="submit" form="form-generate" data-toggle="tooltip" title="生成代码" class="btn btn-primary">
                         <i class="fa fa-code"></i>
                     </button>
                 </div>
@@ -51,7 +51,7 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <form action="{:url('set')}" method="post" enctype="multipart/form-data" id="form-create"
+                    <form action="{:url('generate')}" method="post" enctype="multipart/form-data" id="form-generate"
                           class="form-horizontal">
                         <ul class="nav nav-tabs">
                             <li class="active">
@@ -64,7 +64,7 @@
                                 <div class="form-group required">
                                     <lael class="col-sm-2 control-label" for="input-table">数据表名</lael>
                                     <div class="col-sm-10">
-                                        <input type="text" name="tablename" placeholder="请输入表的英文名"
+                                        <input type="text" name="table" placeholder="请输入表的英文名"
                                                id="input-table" class="form-control" value="member"/>
 
                                     </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" for="input-mark">表的备注</label>
                                     <div class="col-sm-10">
-                                        <input type="text" name="tableexname" value="" placeholder="表的备注"
+                                        <input type="text" name="comment" value="" placeholder="表的备注"
                                                id="input-mark" class="form-control"/>
                                     </div>
                                 </div>
@@ -200,19 +200,19 @@
                 html += '<input type="text" class="form-control" name="" value="'+item["COLUMN_COMMENT"]+'">';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","id","sort"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '</div>';
             });

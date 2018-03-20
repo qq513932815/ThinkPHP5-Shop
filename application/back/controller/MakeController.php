@@ -40,4 +40,10 @@ class MakeController extends Controller
             'table_name'=>$table
         ];
     }
+
+    public function generateAction()
+    {
+        $input = input('post');
+        dump($input);
+    }
 }

@@ -12,6 +12,7 @@ namespace app\back\controller;
 use app\back\validate\BrandValidate;
 use think\Controller;
 use app\back\model\Brand as BrandModel;
+use think\Db;
 use think\Session;
 
 class BrandController extends Controller
@@ -103,7 +104,64 @@ class BrandController extends Controller
     public function multiAction()
     {
         $selected = input('selected/a',[]);
-        return json($selected);
+        if(empty($selected))
+        {
+            return $this->redirect('index');
+        }
+        //批量删除
+        BrandModel::destroy($selected);
+        return $this->redirect('index');
+    }
+
+    public function setAction()
+    {
+        //获取当前id
+        $id = input('get.id');
+        $this->assign('id',$id);
+        $request = request();
+        if ($request->isGet()) {
+            //GET请求
+            if (Session::get('message') == '' && Session::get('data') == '') {
+                $message = [];
+                $data = [];
+                if (!empty($id))
+                {
+                    $data = Db::name('brand')->find($id);
+                }
+            } else {
+                $message = Session::get('message');
+                $data = Session::get('data');
+            }
+            $this->assign('message', $message);
+            $this->assign('data', $data);
+            return $this->fetch();
+        } elseif ($request->isPost()) {
+            //POST请求,数据入库
+            $post_result = input('post.');
+            $brand_validate = new BrandValidate();
+            if (!$brand_validate->batch(true)->check($post_result)) {
+                return $this->redirect('create', [], 302, [
+                    'message' => $brand_validate->getError(),
+                    'data' => $post_result
+                ]);
+            } else {
+                //保存数据
+                $model = new BrandModel();
+                if (isset($post_result['id']))
+                {
+                    $model = $model->find($post_result['id']);
+                }
+
+                $model->save($post_result);
+                if ($request) {
+                    return $this->redirect('index');
+                } else {
+                    return $this->redirect('create');
+                }
+            }
+        }
+
+        return $this->fetch();
     }
 
 }

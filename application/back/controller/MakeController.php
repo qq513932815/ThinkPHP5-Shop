@@ -50,11 +50,41 @@ class MakeController extends Controller
         $this->input['comment'] = input('comment');
         $this->input['fields'] = input('fields/a');
 
-        $this->controller();
+        $this->createController();
+        $this->createModel();
+    }
+
+    //公用的替换方法
+    protected function replace($template,$search,$replace,$file)
+    {
+        $template_content = file_get_contents($template);
+        $content = str_replace($search,$replace,$template_content);
+
+        //判断一下要生成的文件是否存在
+        $path = dirname($file);//获取文件目录
+        if(!is_dir($path))
+        {
+            mkdir($path);
+        }
+        //写入文件
+        file_put_contents($file,$content);
+
+    }
+
+    public function createModel()
+    {
+        $model = $this->mkModel();
+
+        $template = APP_PATH.'back/code/model.php';
+        $search = ['%model%'];
+        $replace = [$model];
+        $file = APP_PATH.'back/model/'.$model.'.php';
+        $this->replace($template,$search,$replace,$file);
+        echo '模型已经生成',$file,'</br>';
     }
 
     //生成控制器
-    public function controller()
+    public function createController()
     {
         $model = $this->mkModel();
         $controller = $this->mkController();
@@ -67,10 +97,12 @@ class MakeController extends Controller
         $replace = [$model,$controller,$validate,$this->input['table']];
         $content = str_replace($search,$replace,$template);
 
-        //重新生成一个文件
+        //重新生成一个控制器文件
         $file = APP_PATH.'back/controller/'.$controller.'.php';
         file_put_contents($file,$content);
         echo '控制器已经生成',$file,'</br>';
+
+        //
     }
 
     public function mkModel()

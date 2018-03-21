@@ -2,7 +2,7 @@
 <html dir="ltr" lang="zh-CN">
 <head>
     <meta charset="UTF-8" />
-    <title>{block name="title"}自动化操作/block}</title>
+    <title>{block name="title"}自动化操作{/block}</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <link href="__STATIC__/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
@@ -194,25 +194,25 @@
                 html += '<div class="form-group">';
                 html += '<div class="col-sm-2"></div>';
                 html += '<div class="col-sm-2">';
-                html += '<input type="text" class="form-control" name="" readonly value="'+item["COLUMN_NAME"]+'">';
+                html += '<input type="text" class="form-control" name="fields['+ index +'][name]" readonly value="'+item["COLUMN_NAME"]+'">';
                 html += '</div>';
                 html += '<div class="col-sm-2">';
-                html += '<input type="text" class="form-control" name="" value="'+item["COLUMN_COMMENT"]+'">';
+                html += '<input type="text" class="form-control" name="fields['+ index +'][comment]" value="'+item["COLUMN_COMMENT"]+'">';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","id","sort"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="fields['+ index +'][index]" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","id","sort"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","id"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="fields['+ index +'][sort]" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="fields['+ index +'][search]" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="fields['+ index +'][set]" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '<div class="col-sm-1">';
-                html += '<input type="checkbox" class="form-control" name="" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
+                html += '<input type="checkbox" class="form-control" name="fields['+ index +'][require]" '+(($.inArray(item.COLUMN_NAME,["update_time","create_time","sort","id"]))==-1?"checked":"")+'>';
                 html += '</div>';
                 html += '</div>';
             });

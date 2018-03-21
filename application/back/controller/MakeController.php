@@ -15,7 +15,10 @@ use think\Db;
 
 class MakeController extends Controller
 {
-    //
+
+    protected $input = [];
+    protected  $label = [];
+
     public function  tableAction()
     {
         return $this->fetch();
@@ -43,7 +46,60 @@ class MakeController extends Controller
 
     public function generateAction()
     {
-        $input = input('post');
-        dump($input);
+        $this->input['table'] = input('table');
+        $this->input['comment'] = input('comment');
+        $this->input['fields'] = input('fields/a');
+
+        $this->controller();
+    }
+
+    //生成控制器
+    public function controller()
+    {
+        $model = $this->mkModel();
+        $controller = $this->mkController();
+        $validate = $this->mkValidate();
+
+        //文件读取
+        $template = file_get_contents(APP_PATH.'back/code/controller.php');
+        //替换里面的内容
+        $search = ['%model%','%controller%','%validate%','%table%'];
+        $replace = [$model,$controller,$validate,$this->input['table']];
+        $content = str_replace($search,$replace,$template);
+
+        //重新生成一个文件
+        $file = APP_PATH.'back/controller/'.$controller.'.php';
+        file_put_contents($file,$content);
+        echo '控制器已经生成',$file,'</br>';
+    }
+
+    public function mkModel()
+    {
+        $table = $this->input['table'];
+        if (!isset($this->label['model']))
+        {
+            $this->label['model'] = implode(array_map('ucfirst',explode('_',$table)));
+        }
+        return $this->label['model'];
+    }
+
+    public function mkController()
+    {
+        $table = $this->input['table'];
+        if (!isset($this->label['controller']))
+        {
+            $this->label['controller'] = implode(array_map('ucfirst',explode('_',$table))).'Controller';
+        }
+        return $this->label['controller'];
+    }
+
+    public function mkValidate()
+    {
+        $table = $this->input['table'];
+        if (!isset($this->label['validate']))
+        {
+            $this->label['validate'] = implode(array_map('ucfirst',explode('_',$table))).'Validate';
+        }
+        return $this->label['validate'];
     }
 }

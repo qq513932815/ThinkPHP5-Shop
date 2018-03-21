@@ -52,6 +52,7 @@ class MakeController extends Controller
 
         $this->createController();
         $this->createModel();
+        $this->createValidate();
     }
 
     //公用的替换方法
@@ -69,6 +70,31 @@ class MakeController extends Controller
         //写入文件
         file_put_contents($file,$content);
 
+    }
+
+    public function createValidate()
+    {
+        //获取验证器的名称
+        $validate = $this->mkValidate();
+
+        $label_list = '';
+        $template = APP_PATH.'back/code/validateField.php';
+        $template_content = file_get_contents($template);
+        foreach ($this->input['fields'] as $field)
+        {
+            $search = ['%field%','%comment%'];
+            $replace = [$field['name'],$field["comment"]];
+            $label_list .=str_replace($search,$replace,$template_content);
+        }
+
+        //替换文件
+        $template = APP_PATH.'back/code/validate.php';
+        $search = ['%validate%','%label_list%'];
+        $replace = [$validate,$label_list];
+        $file = APP_PATH.'back/validate/'.$validate.'.php';
+
+        $this->replace($template,$search,$replace,$file);
+        echo '验证器已经生成',$file,'</br>';
     }
 
     public function createModel()

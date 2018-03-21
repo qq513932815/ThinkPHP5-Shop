@@ -53,6 +53,28 @@ class MakeController extends Controller
         $this->createController();
         $this->createModel();
         $this->createValidate();
+        $this->createViewIndex();
+
+    }
+
+    protected function createViewIndex()
+    {
+        //生成一堆代码  路径：view/member/index.heml
+
+        //搜索区域
+        $search_field_list = '';
+        $template_search = file_get_contents(APP_PATH.'back/code/viewIndexSearchField.html');
+
+        //表头区域
+        $table_head_list = '';
+        $template_head = file_get_contents(APP_PATH.'back/code/viewIndexTableHead.html');
+        $template_head_order = file_get_contents(APP_PATH.'back/code/viewIndexTableHeadOrder.html');
+
+        //表格主体区域
+        $table_data = '';
+        $template_data = file_get_contents(APP_PATH.'back/code/viewIndexTableData.html');
+
+        //所有的三部分，都是基于在前台勾选的复选框
     }
 
     //公用的替换方法

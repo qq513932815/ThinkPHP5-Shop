@@ -9,24 +9,29 @@
 namespace app\back\controller;
 
 
-use app\back\validate\%validate%;
-use app\back\model\%model%;
+use app\back\validate\AdminValidate;
+use app\back\model\Admin;
 use think\Controller;
 use think\Db;
 use think\Session;
 
-class %controller% extends Controller
+class AdminController extends Controller
 {
 
     public function indexAction()
     {
-        $model = new %model%;
+        $model = new Admin;
         //筛选
         //拿到传递数据
         $filter = input('filter/a');
         $filter_order = [];
 
-        %where_list%
+                    //判断是否有username条件
+            if(isset($filter['username']) && ''!=$filter['username'])
+            {
+            $model->where('username','like','%'.$filter['username'].'%');
+            $filter_order['filter[username]'] = $filter['username'];
+            }
 
         //排序
         $order = input('order/a');
@@ -60,7 +65,7 @@ class %controller% extends Controller
             return $this->redirect('index');
         }
         //批量删除
-        %model%::destroy($selected);
+        Admin::destroy($selected);
         return $this->redirect('index');
     }
 
@@ -77,7 +82,7 @@ class %controller% extends Controller
                 $data = [];
                 if (!empty($id))
                 {
-                    $data = Db::name('%table%')->find($id);
+                    $data = Db::name('admin')->find($id);
                 }
             } else {
                 $message = Session::get('message');
@@ -89,7 +94,7 @@ class %controller% extends Controller
         } elseif ($request->isPost()) {
             //POST请求,数据入库
             $post_result = input('post.');
-            $validate = new %validate%;
+            $validate = new AdminValidate;
             if (!$validate->batch(true)->check($post_result)) {
                 return $this->redirect('set', [], 302, [
                     'message' => $validate->getError(),
@@ -97,7 +102,7 @@ class %controller% extends Controller
                 ]);
             } else {
                 //保存数据
-                $model = new %model%;
+                $model = new Admin;
                 if (isset($post_result['id']))
                 {
                     $model = $model->find($post_result['id']);
@@ -107,7 +112,7 @@ class %controller% extends Controller
                 if ($request) {
                     return $this->redirect('index');
                 } else {
-                    return $this->redirect('set');
+                    return $this->redirect('create');
                 }
             }
         }

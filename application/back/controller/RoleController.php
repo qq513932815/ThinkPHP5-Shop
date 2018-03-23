@@ -9,38 +9,33 @@
 namespace app\back\controller;
 
 
-use app\back\validate\MemberValidate;
-use app\back\model\Member;
+use app\back\validate\RoleValidate;
+use app\back\model\Role;
 use think\Controller;
 use think\Db;
 use think\Session;
 
-class MemberController extends Controller
+class RoleController extends Controller
 {
 
     public function indexAction()
     {
-        $model = new Member;
+        $model = new Role;
         //筛选
         //拿到传递数据
         $filter = input('filter/a');
         $filter_order = [];
 
-                    //判断是否有telephone条件
-            if(isset($filter['telephone']) && ''!=$filter['telephone'])
+                    //判断是否有title条件
+            if(isset($filter['title']) && ''!=$filter['title'])
             {
-            $model->where('telephone','like','%'.$filter['telephone'].'%');
-            $filter_order['filter[telephone]'] = $filter['telephone'];
-            }            //判断是否有email条件
-            if(isset($filter['email']) && ''!=$filter['email'])
+            $model->where('title','like','%'.$filter['title'].'%');
+            $filter_order['filter[title]'] = $filter['title'];
+            }            //判断是否有content条件
+            if(isset($filter['content']) && ''!=$filter['content'])
             {
-            $model->where('email','like','%'.$filter['email'].'%');
-            $filter_order['filter[email]'] = $filter['email'];
-            }            //判断是否有username条件
-            if(isset($filter['username']) && ''!=$filter['username'])
-            {
-            $model->where('username','like','%'.$filter['username'].'%');
-            $filter_order['filter[username]'] = $filter['username'];
+            $model->where('content','like','%'.$filter['content'].'%');
+            $filter_order['filter[content]'] = $filter['content'];
             }
 
         //排序
@@ -75,7 +70,7 @@ class MemberController extends Controller
             return $this->redirect('index');
         }
         //批量删除
-        Member::destroy($selected);
+        Role::destroy($selected);
         return $this->redirect('index');
     }
 
@@ -92,7 +87,7 @@ class MemberController extends Controller
                 $data = [];
                 if (!empty($id))
                 {
-                    $data = Db::name('member')->find($id);
+                    $data = Db::name('role')->find($id);
                 }
             } else {
                 $message = Session::get('message');
@@ -104,7 +99,7 @@ class MemberController extends Controller
         } elseif ($request->isPost()) {
             //POST请求,数据入库
             $post_result = input('post.');
-            $validate = new MemberValidate;
+            $validate = new RoleValidate;
             if (!$validate->batch(true)->check($post_result)) {
                 return $this->redirect('create', [], 302, [
                     'message' => $validate->getError(),
@@ -112,7 +107,7 @@ class MemberController extends Controller
                 ]);
             } else {
                 //保存数据
-                $model = new Member;
+                $model = new Role;
                 if (isset($post_result['id']))
                 {
                     $model = $model->find($post_result['id']);

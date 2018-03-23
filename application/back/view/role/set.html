@@ -1,6 +1,6 @@
 {extend name="common/layout" /}
 
-{block name="title"}管理{/block}
+{block name="title"}权限表管理{/block}
 {block name="content"}
 <div id="content">
 
@@ -14,7 +14,7 @@
                     <i class="fa fa-reply"></i>
                 </a>
             </div>
-            <h1>{if condition="!is_null($id)"}修改{else/}创建{/if}</h1>
+            <h1>权限表{if condition="!is_null($id)"}修改{else/}创建{/if}</h1>
             <ul class="breadcrumb">
                 <li>
                     <a href="/back/site/index.html">首页</a>
@@ -30,7 +30,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <i class="fa fa-pencil"></i>
-                    {if condition="!is_null($id)"}修改{else/}创建{/if}
+                    权限表{if condition="!is_null($id)"}修改{else/}创建{/if}
                 </h3>
             </div>
             <div class="panel-body">
@@ -50,13 +50,13 @@
 
                             
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-telephone">电话</lael>
+                            <lael class="col-sm-2 control-label" for="input-title">标题</lael>
                             <div class="col-sm-10">
-                                <input type="text" name="telephone" placeholder="电话" value="{$data['telephone']|default=''}"
+                                <input type="text" name="title" placeholder="标题" value="{$data['title']|default=''}"
                                        id="input-title" class="form-control"/>
 
-                                {if condition="isset($message['telephone'])"}
-                                <label class="text-danger" id="input-telephone-error" for="input-title">{$message['telephone']}</label>
+                                {if condition="isset($message['title'])"}
+                                <label class="text-danger" id="input-title-error" for="input-title">{$message['title']}</label>
                                 {else/}
 
                                 {/if}
@@ -64,13 +64,13 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-email">邮箱</lael>
+                            <lael class="col-sm-2 control-label" for="input-content">评论</lael>
                             <div class="col-sm-10">
-                                <input type="text" name="email" placeholder="邮箱" value="{$data['email']|default=''}"
+                                <input type="text" name="content" placeholder="评论" value="{$data['content']|default=''}"
                                        id="input-title" class="form-control"/>
 
-                                {if condition="isset($message['email'])"}
-                                <label class="text-danger" id="input-email-error" for="input-title">{$message['email']}</label>
+                                {if condition="isset($message['content'])"}
+                                <label class="text-danger" id="input-content-error" for="input-title">{$message['content']}</label>
                                 {else/}
 
                                 {/if}
@@ -78,27 +78,13 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-username">用户名</lael>
+                            <lael class="col-sm-2 control-label" for="input-role">权限</lael>
                             <div class="col-sm-10">
-                                <input type="text" name="username" placeholder="用户名" value="{$data['username']|default=''}"
+                                <input type="text" name="role" placeholder="权限" value="{$data['role']|default=''}"
                                        id="input-title" class="form-control"/>
 
-                                {if condition="isset($message['username'])"}
-                                <label class="text-danger" id="input-username-error" for="input-title">{$message['username']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-password">密码</lael>
-                            <div class="col-sm-10">
-                                <input type="text" name="password" placeholder="密码" value="{$data['password']|default=''}"
-                                       id="input-title" class="form-control"/>
-
-                                {if condition="isset($message['password'])"}
-                                <label class="text-danger" id="input-password-error" for="input-title">{$message['password']}</label>
+                                {if condition="isset($message['role'])"}
+                                <label class="text-danger" id="input-role-error" for="input-title">{$message['role']}</label>
                                 {else/}
 
                                 {/if}

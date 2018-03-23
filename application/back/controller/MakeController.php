@@ -66,14 +66,20 @@ class MakeController extends Controller
 
         foreach ($this->input['fields'] as $field)
         {
-            $search = ['%field%','%label%','%label%'];
-            $require = '';
-            if (isset($field['require']))
+            if(isset($field['set']))
             {
-                $require = 'required';
+                $search = ['%field%','%label%','%required%'];
+                $require = '';
+                if (isset($field['require']))
+                {
+                    $require = 'required';
+                }
+                $replace = [$field['name'],$field['comment'],$require];
+                $table_input_list .= str_replace($search,$replace,$template_input);
+            }else{
+
             }
-            $replace = [$field['name'],$field['comment'],$require];
-            $table_input_list .= str_replace($search,$replace,$template_input);
+
         }
 
         //大替换，整体替换
@@ -108,7 +114,7 @@ class MakeController extends Controller
         //列表，排序，搜索
         //循环所有字段
 
-        $cols_number = 0;
+        $cols_number = 1;
 
         foreach ($this->input['fields'] as $field)
         {

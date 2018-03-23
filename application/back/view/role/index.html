@@ -1,5 +1,5 @@
 {extend name="common/layout"}
-{block name="title"}列表{/block}
+{block name="title"}权限表列表{/block}
 {block name="content"}
 <div id="content">
     <div class="page-header">
@@ -13,13 +13,13 @@
                     <i class="fa fa-trash-o"></i>
                 </button>
             </div>
-            <h1>管理</h1>
+            <h1>权限表管理</h1>
             <ul class="breadcrumb">
                 <li>
                     <a href="/back/site/index.html">首页</a>
                 </li>
                 <li>
-                    <a href="/back/brand/index.html">管理</a>
+                    <a href="/back/brand/index.html">权限表管理</a>
                 </li>
             </ul>
         </div>
@@ -29,7 +29,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <i class="fa fa-list"></i>
-                    列表
+                    权限表列表
                 </h3>
             </div>
             <div class="panel-body">
@@ -41,23 +41,16 @@
                             
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label" for="input-filter-telephone">电话</label>
-                                    <input type="text" name="filter[telephone]" value="{$filter['telephone']|default=''}"
-                                           placeholder="电话" id="input-filter-telephone" class="form-control"/>
+                                    <label class="control-label" for="input-filter-title">标题</label>
+                                    <input type="text" name="filter[title]" value="{$filter['title']|default=''}"
+                                           placeholder="标题" id="input-filter-title" class="form-control"/>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label" for="input-filter-email">邮箱</label>
-                                    <input type="text" name="filter[email]" value="{$filter['email']|default=''}"
-                                           placeholder="邮箱" id="input-filter-email" class="form-control"/>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label" for="input-filter-username">用户名</label>
-                                    <input type="text" name="filter[username]" value="{$filter['username']|default=''}"
-                                           placeholder="用户名" id="input-filter-username" class="form-control"/>
+                                    <label class="control-label" for="input-filter-content">评论</label>
+                                    <input type="text" name="filter[content]" value="{$filter['content']|default=''}"
+                                           placeholder="评论" id="input-filter-content" class="form-control"/>
                                 </div>
                             </div>
 
@@ -90,26 +83,14 @@
                                 </td>
 
                                             <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'telephone')}"
-                   class="{:classOrder($order,'telephone')}">电话</a>
+                <a href="{:myUrl('index',$filter_order,$order,'title')}"
+                   class="{:classOrder($order,'title')}">标题</a>
             </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'email')}"
-                   class="{:classOrder($order,'email')}">邮箱</a>
+                <a href="{:myUrl('index',$filter_order,$order,'content')}"
+                   class="{:classOrder($order,'content')}">评论</a>
             </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'username')}"
-                   class="{:classOrder($order,'username')}">用户名</a>
-            </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'hash_str')}"
-                   class="{:classOrder($order,'hash_str')}">哈希值</a>
-            </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'active_time')}"
-                   class="{:classOrder($order,'active_time')}">激活时间</a>
-            </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'status')}"
-                   class="{:classOrder($order,'status')}">状态</a>
-            </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'sort')}"
-                   class="{:classOrder($order,'sort')}">排序</a>
+                <a href="{:myUrl('index',$filter_order,$order,'role')}"
+                   class="{:classOrder($order,'role')}">权限</a>
             </td>
 
                                 <td class="text-right">管理</td>
@@ -123,7 +104,7 @@
                                     <input type="checkbox" name="selected[]" value="{$item->id}"/>
                                 </td>
 
-                                                        <td class="text-left">{$item->telephone}</td>                        <td class="text-left">{$item->email}</td>                        <td class="text-left">{$item->username}</td>                        <td class="text-left">{$item->hash_str}</td>                        <td class="text-left">{$item->active_time}</td>                        <td class="text-left">{$item->status}</td>                        <td class="text-left">{$item->sort}</td>
+                                                        <td class="text-left">{$item->title}</td>                        <td class="text-left">{$item->content}</td>                        <td class="text-left">{$item->role}</td>
 
                                 <td class="text-right">
                                     <a href="{:url('set',['id'=>$item->id])}" data-toggle="tooltip" title="编辑"
@@ -135,7 +116,7 @@
                             {/volist}
                             {else/}
                             <tr>
-                                <td class="text-center" colspan="11">
+                                <td class="text-center" colspan="5">
                                     无数据
                                 </td>
                             </tr>

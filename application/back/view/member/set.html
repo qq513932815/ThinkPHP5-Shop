@@ -1,0 +1,214 @@
+{extend name="common/layout" /}
+
+{block name="title"}管理{/block}
+{block name="content"}
+<div id="content">
+
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-create" data-toggle="tooltip" title="保存" class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{:url('index')}" data-toggle="tooltip" title="取消" class="btn btn-default">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>{if condition="!is_null($id)"}修改{else/}创建{/if}</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/back/site/index.html">首页</a>
+                </li>
+                <li>
+                    <a href="/back/brand/index.html">品牌</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-pencil"></i>
+                    {if condition="!is_null($id)"}修改{else/}创建{/if}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="{:url('set')}" method="post" enctype="multipart/form-data" id="form-create"
+                      class="form-horizontal">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-general" data-toggle="tab">基本信息</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-general">
+
+                            {if condition="!is_null($id)"}
+                            <input type="hidden" name="id" value="{$id}">
+                            {/if}
+
+                            
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-id"> id</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="id" placeholder=" id" value="{$data['id']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['id'])"}
+                                <label class="text-danger" id="input-id-error" for="input-title">{$message['id']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-telephone">电话</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="telephone" placeholder="电话" value="{$data['telephone']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['telephone'])"}
+                                <label class="text-danger" id="input-telephone-error" for="input-title">{$message['telephone']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-email">邮箱</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="email" placeholder="邮箱" value="{$data['email']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['email'])"}
+                                <label class="text-danger" id="input-email-error" for="input-title">{$message['email']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-username">用户名</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="username" placeholder="用户名" value="{$data['username']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['username'])"}
+                                <label class="text-danger" id="input-username-error" for="input-title">{$message['username']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-password">密码</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="password" placeholder="密码" value="{$data['password']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['password'])"}
+                                <label class="text-danger" id="input-password-error" for="input-title">{$message['password']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-hash_str">哈希值</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="hash_str" placeholder="哈希值" value="{$data['hash_str']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['hash_str'])"}
+                                <label class="text-danger" id="input-hash_str-error" for="input-title">{$message['hash_str']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-active_time">激活时间</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="active_time" placeholder="激活时间" value="{$data['active_time']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['active_time'])"}
+                                <label class="text-danger" id="input-active_time-error" for="input-title">{$message['active_time']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-status">状态</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="status" placeholder="状态" value="{$data['status']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['status'])"}
+                                <label class="text-danger" id="input-status-error" for="input-title">{$message['status']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-sort">排序</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="sort" placeholder="排序" value="{$data['sort']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['sort'])"}
+                                <label class="text-danger" id="input-sort-error" for="input-title">{$message['sort']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-create_time">创建时间</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="create_time" placeholder="创建时间" value="{$data['create_time']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['create_time'])"}
+                                <label class="text-danger" id="input-create_time-error" for="input-title">{$message['create_time']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-update_time">修改时间</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="update_time" placeholder="修改时间" value="{$data['update_time']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['update_time'])"}
+                                <label class="text-danger" id="input-update_time-error" for="input-title">{$message['update_time']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

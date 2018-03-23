@@ -1,0 +1,182 @@
+{extend name="common/layout"}
+{block name="title"}列表{/block}
+{block name="content"}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="{:url('set')}" data-toggle="tooltip" title="新增" class="btn btn-primary  "> <i
+                        class="fa fa-plus"></i>
+                </a>
+                <button type="button" data-toggle="tooltip" title="删除" class="btn btn-danger"
+                        onclick="confirm('确认？') ? $('#form-index').submit() : false;">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
+            <h1>管理</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/back/site/index.html">首页</a>
+                </li>
+                <li>
+                    <a href="/back/brand/index.html">管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-list"></i>
+                    列表
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="{:url('index')}" method="get">
+                    <div class="well">
+                        <div class="row">
+
+                            <!--动态生成-->
+                            
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-filter-telephone">电话</label>
+                                    <input type="text" name="filter[telephone]" value="{$filter['telephone']|default=''}"
+                                           placeholder="电话" id="input-filter-telephone" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-filter-email">邮箱</label>
+                                    <input type="text" name="filter[email]" value="{$filter['email']|default=''}"
+                                           placeholder="邮箱" id="input-filter-email" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-filter-username">用户名</label>
+                                    <input type="text" name="filter[username]" value="{$filter['username']|default=''}"
+                                           placeholder="用户名" id="input-filter-username" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-filter-hash_str">哈希值</label>
+                                    <input type="text" name="filter[hash_str]" value="{$filter['hash_str']|default=''}"
+                                           placeholder="哈希值" id="input-filter-hash_str" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-filter-active_time">激活时间</label>
+                                    <input type="text" name="filter[active_time]" value="{$filter['active_time']|default=''}"
+                                           placeholder="激活时间" id="input-filter-active_time" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="input-filter-status">状态</label>
+                                    <input type="text" name="filter[status]" value="{$filter['status']|default=''}"
+                                           placeholder="状态" id="input-filter-status" class="form-control"/>
+                                </div>
+                            </div>
+
+                        <div class="row">
+                            <!--<div class="col-sm-6">-->
+                            <!--<div class="form-group">-->
+                            <!--<label class="control-label" for="input-filter-fuzzy">模糊搜索-->
+                            <!--<input type="checkbox" name="filter[fuzzy]" value="1" id="input-filter-fuzzy" class="form-control" />-->
+                            <!--</label>-->
+                            <!--</div>-->
+                            <!--</div>-->
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <button type="submit" id="button-filter" class="btn btn-primary pull-right">
+                                    <i class="fa fa-search"></i>
+                                    筛选
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{:url('multi')}" method="post" enctype="multipart/form-data" id="form-index">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <td style="width: 1px;" class="text-center">
+                                    <input type="checkbox"
+                                           onclick="$('input[name=\'selected[]\']').prop('checked', this.checked);"/>
+                                </td>
+
+                                            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'telephone')}"
+                   class="{:classOrder($order,'telephone')}">电话</a>
+            </td>            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'email')}"
+                   class="{:classOrder($order,'email')}">邮箱</a>
+            </td>            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'username')}"
+                   class="{:classOrder($order,'username')}">用户名</a>
+            </td>            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'hash_str')}"
+                   class="{:classOrder($order,'hash_str')}">哈希值</a>
+            </td>            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'active_time')}"
+                   class="{:classOrder($order,'active_time')}">激活时间</a>
+            </td>            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'status')}"
+                   class="{:classOrder($order,'status')}">状态</a>
+            </td>            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'sort')}"
+                   class="{:classOrder($order,'sort')}">排序</a>
+            </td>
+
+                                <td class="text-right">管理</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {if condition="$list->total()>0"}
+                            {volist name='list' id='item'}
+                            <tr>
+                                <td class="text-center">
+                                    <input type="checkbox" name="selected[]" value="{$item->id}"/>
+                                </td>
+
+                                                        <td class="text-left">{$item->telephone}</td>                        <td class="text-left">{$item->email}</td>                        <td class="text-left">{$item->username}</td>                        <td class="text-left">{$item->hash_str}</td>                        <td class="text-left">{$item->active_time}</td>                        <td class="text-left">{$item->status}</td>                        <td class="text-left">{$item->sort}</td>
+
+                                <td class="text-right">
+                                    <a href="{:url('set',['id'=>$item->id])}" data-toggle="tooltip" title="编辑"
+                                       class="btn btn-primary ">
+                                        <i class="fa fa-pencil"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {/volist}
+                            {else/}
+                            <tr>
+                                <td class="text-center" colspan="11">
+                                    无数据
+                                </td>
+                            </tr>
+                            {/if}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        {$list->render()}                  </div>
+                    <div class="col-sm-6 text-right">显示开始 {$start} 到 {$end}  （总
+                        {$list->lastPage()}页）
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{/block}

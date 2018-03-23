@@ -54,6 +54,36 @@ class MakeController extends Controller
         $this->createModel();
         $this->createValidate();
         $this->createViewIndex();
+        $this->createViewSet();
+
+    }
+
+    protected function createViewSet()
+    {
+        //字段输入框
+        $table_input_list = '';
+        $template_input = file_get_contents(APP_PATH.'back/code/viewSetInput.html');
+
+        foreach ($this->input['fields'] as $field)
+        {
+            $search = ['%field%','%label%','%label%'];
+            $require = '';
+            if (isset($field['require']))
+            {
+                $require = 'required';
+            }
+            $replace = [$field['name'],$field['comment'],$require];
+            $table_input_list .= str_replace($search,$replace,$template_input);
+        }
+
+        //大替换，整体替换
+        $template = APP_PATH.'back/code/viewSet.html';
+        $search = ['%table_title%','%table_input_list%'];
+        $replace = [$this->input['comment'],$table_input_list];
+        $file = APP_PATH.'back/view/'.$this->input['table'].'/set.html';
+
+        $this->replace($template,$search,$replace,$file);
+        echo '添加修改视图已经生成',$file,'</br>';
 
     }
 
@@ -75,6 +105,52 @@ class MakeController extends Controller
         $template_data = file_get_contents(APP_PATH.'back/code/viewIndexTableData.html');
 
         //所有的三部分，都是基于在前台勾选的复选框
+        //列表，排序，搜索
+        //循环所有字段
+
+        $cols_number = 0;
+
+        foreach ($this->input['fields'] as $field)
+        {
+            //拼接字符串-搜索区域
+            if(isset($field['search']))
+            {
+                $search = ['%field%','%label%'];
+                $replace = [$field['name'],$field['comment']];
+                $search_field_list .= str_replace($search,$replace,$template_search);
+            }
+
+            //拼接字符串-表头区域
+            if (isset($field['index']))
+            {
+                //1.需要排序
+                if (isset($field['sort']))
+                {
+                    $template_head = $template_head_order;
+                }else{
+
+                }
+
+                $search = ['%field%','%label%'];
+                $replace = [$field['name'],$field['comment']];
+                $table_head_list .= str_replace($search,$replace,$template_head);
+
+                //拼接字符串-表主体部分
+                $search = ['%field%'];
+                $replace = [$field['name']];
+                $table_data .= str_replace($search,$replace,$template_data);
+            }
+            $cols_number++;
+        }
+
+        //大替换，整体替换
+        $template = APP_PATH.'back/code/viewIndex.html';
+        $search = ['%table_title%','%search_field_list%','%table_head_list%','%table_data%','%cols_number%'];
+        $replace = [$this->input['comment'],$search_field_list,$table_head_list,$table_data,$cols_number];
+        $file = APP_PATH.'back/view/'.$this->input['table'].'/index.html';
+
+        $this->replace($template,$search,$replace,$file);
+        echo '视图已经生成',$file,'</br>';
     }
 
     //公用的替换方法
@@ -138,11 +214,27 @@ class MakeController extends Controller
         $controller = $this->mkController();
         $validate = $this->mkValidate();
 
+        //替换查询部分内容
+        $where_list = '';
+
+        //文件读取
+        $template = file_get_contents(APP_PATH.'back/code/indexWhere.php');
+
+        //遍历字段，找到需要搜索，使用子母版。
+
+        foreach ($this->input['fields'] as $field){
+            ## 如果不需要搜索字段，不要进行拼接
+            if(!isset($field['search'])) continue;
+            $search = ['%field%'];
+            $replace = [$field['name']];
+            $where_list .= str_replace($search,$replace,$template);
+        }
+
         //文件读取
         $template = file_get_contents(APP_PATH.'back/code/controller.php');
         //替换里面的内容
-        $search = ['%model%','%controller%','%validate%','%table%'];
-        $replace = [$model,$controller,$validate,$this->input['table']];
+        $search = ['%model%','%controller%','%validate%','%where_list%','%table%'];
+        $replace = [$model,$controller,$validate,$where_list,$this->input['table']];
         $content = str_replace($search,$replace,$template);
 
         //重新生成一个控制器文件

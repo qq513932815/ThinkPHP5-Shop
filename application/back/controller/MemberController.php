@@ -26,7 +26,37 @@ class MemberController extends Controller
         $filter = input('filter/a');
         $filter_order = [];
 
-        %where_list%
+                    //判断是否有telephone条件
+            if(isset($filter['telephone']) && ''!=$filter['telephone'])
+            {
+            $model->where('telephone','like','%'.$filter['telephone'].'%');
+            $filter_order['filter[telephone]'] = $filter['telephone'];
+            }            //判断是否有email条件
+            if(isset($filter['email']) && ''!=$filter['email'])
+            {
+            $model->where('email','like','%'.$filter['email'].'%');
+            $filter_order['filter[email]'] = $filter['email'];
+            }            //判断是否有username条件
+            if(isset($filter['username']) && ''!=$filter['username'])
+            {
+            $model->where('username','like','%'.$filter['username'].'%');
+            $filter_order['filter[username]'] = $filter['username'];
+            }            //判断是否有hash_str条件
+            if(isset($filter['hash_str']) && ''!=$filter['hash_str'])
+            {
+            $model->where('hash_str','like','%'.$filter['hash_str'].'%');
+            $filter_order['filter[hash_str]'] = $filter['hash_str'];
+            }            //判断是否有active_time条件
+            if(isset($filter['active_time']) && ''!=$filter['active_time'])
+            {
+            $model->where('active_time','like','%'.$filter['active_time'].'%');
+            $filter_order['filter[active_time]'] = $filter['active_time'];
+            }            //判断是否有status条件
+            if(isset($filter['status']) && ''!=$filter['status'])
+            {
+            $model->where('status','like','%'.$filter['status'].'%');
+            $filter_order['filter[status]'] = $filter['status'];
+            }
 
         //排序
         $order = input('order/a');

@@ -1,0 +1,15 @@
+
+                        <div class="form-group %required%">
+                            <lael class="col-sm-2 control-label" for="input-%field%">%label%</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="%field%" placeholder="%label%" value="{$data['%field%']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['%field%'])"}
+                                <label class="text-danger" id="input-%field%-error" for="input-title">{$message['%field%']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>

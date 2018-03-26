@@ -18,6 +18,35 @@ use think\Session;
 class AdminController extends Controller
 {
 
+    public function loginAction()
+    {
+        $request = request();
+        if ($request->isGet())
+        {
+            return $this->fetch();
+        }elseif ($request->isPost()){
+            $username = input('username');
+            $password = input('password');
+
+            $condition = [
+                'username' => $username,
+                'password' => md5(md5($password))
+            ];
+            $admin = Admin::where($condition)->find();
+
+            if ($admin)
+            {
+                //设置登录状态
+                Session::set('admin',$admin);
+                //跳转首页
+                return $this->redirect('site/index');
+            }else{
+                //跳转到登录页面 错误信息返回到login-get方法
+            }
+
+        }
+    }
+
     public function indexAction()
     {
         $model = new Admin;

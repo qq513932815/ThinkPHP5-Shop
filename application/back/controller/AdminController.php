@@ -72,7 +72,7 @@ class AdminController extends Controller
     public function setAction()
     {
         //获取当前id
-        $id = input('get.id');
+        $id = input('id');
         $this->assign('id',$id);
         $request = request();
         if ($request->isGet()) {
@@ -95,7 +95,12 @@ class AdminController extends Controller
             //POST请求,数据入库
             $post_result = input('post.');
             $validate = new AdminValidate;
-            if (!$validate->batch(true)->check($post_result)) {
+            if (!is_null($id))
+            {
+                $validate->scene('update');
+            }
+            if (!$validate->batch(true)->scene('update')->check($post_result))
+            {
                 return $this->redirect('set', [], 302, [
                     'message' => $validate->getError(),
                     'data' => $post_result
@@ -108,7 +113,7 @@ class AdminController extends Controller
                     $model = $model->find($post_result['id']);
                 }
 
-                $model->save($post_result);
+                $model->allowField(true)->save($post_result);
                 if ($request) {
                     return $this->redirect('index');
                 } else {
@@ -118,6 +123,61 @@ class AdminController extends Controller
         }
 
         return $this->fetch();
+    }
+
+    public function repasswordAction()
+    {
+        $request = request();
+        $id = input('id');
+        $this->assign('id',$id);
+        if ($request->isGet())
+        {
+            if (Session::get('message') == '' && Session::get('data') == '') {
+                $message = [];
+                $data = [];
+                if (!empty($id))
+                {
+                    $data = Db::name('admin')->find($id);
+                }
+            } else {
+                $message = Session::get('message');
+                $data = Session::get('data');
+            }
+            $this->assign('message', $message);
+            $this->assign('data', $data);
+            return $this->fetch();
+
+        }elseif ($request->isPost()) {
+
+            //POST请求,数据入库
+            $post_result = input('post.');
+            $validate = new AdminValidate;
+            if (!is_null($id))
+            {
+                $validate->scene('repassword');
+            }
+            if (!$validate->batch(true)->scene('repassword')->check($post_result))
+            {
+                return $this->redirect('repassword?id='.$post_result['id'], [], 302, [
+                    'message' => $validate->getError(),
+                    'data' => $post_result
+                ]);
+            } else {
+                //保存数据
+                $model = new Admin;
+                if (isset($post_result['id']))
+                {
+                    $model = $model->find($post_result['id']);
+                }
+
+                $model->allowField(true)->save($post_result);
+                if ($request) {
+                    return $this->redirect('index');
+                } else {
+                    return $this->redirect('repassword?');
+                }
+            }
+        }
     }
 
 }

@@ -14,9 +14,9 @@ use think\Validate;
 class AdminValidate extends Validate
 {
     protected $rule = [
-        'username' => 'require',
-        'password' => 'require',
-        'password-confirm' => 'require|confirm:password'
+        'username' => 'require|min:4|unique:admin,username',
+        'password' => 'require|min:4|max:18',
+        'password-confirm' => 'require|min:4|max:18|confirm:password'
     ];
 
     protected $field = [
@@ -28,5 +28,10 @@ class AdminValidate extends Validate
         'create_time' => '创建时间',
         'update_time' => '修改时间',
         'password-confirm' => '确认密码',
+    ];
+
+    protected $scene = [
+        'update' =>  ['username'],
+        'repassword' => ['password','password-confirm']
     ];
 }

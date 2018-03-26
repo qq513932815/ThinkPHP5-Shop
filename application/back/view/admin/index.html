@@ -76,12 +76,12 @@
                                 </td>
 
                                             <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'username')}"
-                   class="{:classOrder($order,'username')}">用户名</a>
-            </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'sort')}"
-                   class="{:classOrder($order,'sort')}">排序</a>
-            </td>
+                                                <a href="{:myUrl('index',$filter_order,$order,'username')}"
+                                                   class="{:classOrder($order,'username')}">用户名</a>
+                                            </td>            <td class="text-left">
+                                                <a href="{:myUrl('index',$filter_order,$order,'sort')}"
+                                                   class="{:classOrder($order,'sort')}">排序</a>
+                                            </td>
 
                                 <td class="text-right">管理</td>
                             </tr>
@@ -101,7 +101,12 @@
                                        class="btn btn-primary ">
                                         <i class="fa fa-pencil"></i>
                                     </a>
+                                    <a href="{:url('repassword',['id'=>$item->id])}" data-toggle="tooltip" title="重置密码"
+                                       class="btn btn-danger">
+                                        <i class="fa fa-key"></i>
+                                    </a>
                                 </td>
+
                             </tr>
                             {/volist}
                             {else/}

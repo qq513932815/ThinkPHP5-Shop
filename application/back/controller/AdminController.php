@@ -23,6 +23,16 @@ class AdminController extends Controller
         $request = request();
         if ($request->isGet())
         {
+            //GET请求
+            if (Session::get('message') == '' && Session::get('data') == '') {
+                $message = '';
+                $data = [];
+            } else {
+                $message = Session::get('message');
+                $data = Session::get('data');
+            }
+            $this->assign('message', $message);
+            $this->assign('data', $data);
             return $this->fetch();
         }elseif ($request->isPost()){
             $username = input('username');
@@ -42,6 +52,11 @@ class AdminController extends Controller
                 return $this->redirect('site/index');
             }else{
                 //跳转到登录页面 错误信息返回到login-get方法
+                $this->redirect('login',[],302,[
+                    'message'=>'管理员信息错误',
+                    'data' => input()
+                ]);
+
             }
 
         }

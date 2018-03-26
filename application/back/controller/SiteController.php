@@ -15,6 +15,9 @@ class SiteController extends Controller
 {
     public function indexAction()
     {
+        $user = session('admin')->toArray();
+        $username = $user['username'];
+        $this->assign('username',$username);
         return $this->fetch();
     }
 }

@@ -9,6 +9,7 @@
 namespace app\back\controller;
 
 
+use app\back\model\Action;
 use app\back\validate\RoleValidate;
 use app\back\model\Role;
 use think\Controller;
@@ -123,6 +124,52 @@ class RoleController extends Controller
         }
 
         return $this->fetch();
+    }
+
+    public function setactionAction()
+    {
+        $request = request();
+        $id=input('id');
+        $role = Role::get($id);
+        $this->assign('role',$role);
+
+        //获取用户已有的权限
+        $owner_action = Db::name('role_action')->where('role_id',$id)->column('action_id');
+
+        if ($request->isGet())
+        {
+            //获取全部权限
+            $action_list = Action::order('id')->select();
+
+            $this->assign('action_list',$action_list);
+            $this->assign('checked_list',$owner_action);//已有的权限
+
+            return $this->fetch();
+        }elseif ($request->isPost()){
+            //获取用户传递的值
+            $action = input('actions/a',[]);
+            //更新role_action
+
+            //计算两个数组的差集 array_diff(array1,array2)去array2中寻找array1中没有的子项
+            $deletes = array_diff($owner_action,$action);//需要删除的权限
+            Db::name('role_action')->where([
+                'role_id' => $id,
+                'action_id' => ['in',$deletes]
+            ])->delete();
+
+
+            $inserts = array_diff($action,$owner_action);//需要新增的权限
+            $rows = array_map(function ($action_id) use ($id)
+            {
+                return [
+                    'role_id' => $id,
+                    'action_id' => $action_id
+                ];
+            },$inserts);
+            Db::name('role_action')->insertAll($rows);
+
+            return $this->redirect('setaction',['id'=>$id]);
+        }
     }
 
 }

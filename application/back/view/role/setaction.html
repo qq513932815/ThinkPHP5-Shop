@@ -1,0 +1,65 @@
+{extend name="common/layout" /}
+
+{block name="title"}角色[{$role->title}]授权{/block}
+{block name="content"}
+<div id="content">
+
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-create" data-toggle="tooltip" title="保存" class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{:url('index')}" data-toggle="tooltip" title="取消" class="btn btn-default">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>角色[{$role->title}]授权</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/back/site/index.html">首页</a>
+                </li>
+                <li>
+                    <a href="/back/brand/index.html">授权面板</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-pencil"></i>
+                    动作面板
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="{:url('setaction')}" method="post" enctype="multipart/form-data" id="form-create"
+                      class="form-horizontal">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-general" data-toggle="tab">权限列表</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-general">
+                            {if condition="!is_null($role->id)"}
+                            <input type="hidden" name="id" value="{$role['id']}">
+                            {/if}
+                            <div class="form-group ">
+                                {foreach $action_list as $action}
+                                <div class="col-sm-3 text-center">
+                                    <label for="input-action-{$action['id']}">
+                                        <input type="checkbox" class="form-control" name="actions[]" value="{$action['id']}" id="input-action-{$action['id']}" {if condition="in_array($action['id'],$checked_list)"} checked {/if} > {$action['title']}  </label>
+                                </div>
+                                {/foreach}
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

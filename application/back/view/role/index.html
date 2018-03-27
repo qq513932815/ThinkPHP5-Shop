@@ -89,6 +89,9 @@
                 <a href="{:myUrl('index',$filter_order,$order,'description')}"
                    class="{:classOrder($order,'description')}">描述</a>
             </td>            <td class="text-left">
+                <a href="{:myUrl('index',$filter_order,$order,'is_super')}"
+                   class="{:classOrder($order,'is_super')}">是否为超管，0不是，1是</a>
+            </td>            <td class="text-left">
                 <a href="{:myUrl('index',$filter_order,$order,'sort')}"
                    class="{:classOrder($order,'sort')}">排序</a>
             </td>
@@ -104,19 +107,23 @@
                                     <input type="checkbox" name="selected[]" value="{$item->id}"/>
                                 </td>
 
-                                                        <td class="text-left">{$item->title}</td>                        <td class="text-left">{$item->description}</td>                        <td class="text-left">{$item->sort}</td>
+                                                        <td class="text-left">{$item->title}</td>                        <td class="text-left">{$item->description}</td>                        <td class="text-left">{$item->is_super}</td>                        <td class="text-left">{$item->sort}</td>
 
                                 <td class="text-right">
                                     <a href="{:url('set',['id'=>$item->id])}" data-toggle="tooltip" title="编辑"
                                        class="btn btn-primary ">
                                         <i class="fa fa-pencil"></i>
                                     </a>
+                                    <a href="{:url('setaction',['id'=>$item->id])}" data-toggle="tooltip" title="设置动作"
+                                       class="btn btn-success">
+                                        <i class="fa fa-group"></i>
+                                    </a>
                                 </td>
                             </tr>
                             {/volist}
                             {else/}
                             <tr>
-                                <td class="text-center" colspan="7">
+                                <td class="text-center" colspan="8">
                                     无数据
                                 </td>
                             </tr>

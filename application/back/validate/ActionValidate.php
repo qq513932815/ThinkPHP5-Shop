@@ -11,7 +11,7 @@ namespace app\back\validate;
 
 use think\Validate;
 
-class RoleValidate extends Validate
+class ActionValidate extends Validate
 {
     protected $rule = [
 
@@ -21,7 +21,7 @@ class RoleValidate extends Validate
         
         'id' => 'id',
         'title' => '名称',
-        'description' => '描述',
+        'rule' => '动作路径',
         'sort' => '排序',
         'create_time' => '创建时间',
         'update_time' => '修改时间',

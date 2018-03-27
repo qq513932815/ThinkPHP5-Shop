@@ -1,5 +1,5 @@
 {extend name="common/layout"}
-{block name="title"}角色列表{/block}
+{block name="title"}动作列表{/block}
 {block name="content"}
 <div id="content">
     <div class="page-header">
@@ -13,13 +13,13 @@
                     <i class="fa fa-trash-o"></i>
                 </button>
             </div>
-            <h1>角色管理</h1>
+            <h1>动作管理</h1>
             <ul class="breadcrumb">
                 <li>
                     <a href="/back/site/index.html">首页</a>
                 </li>
                 <li>
-                    <a href="/back/brand/index.html">角色管理</a>
+                    <a href="/back/brand/index.html">动作管理</a>
                 </li>
             </ul>
         </div>
@@ -29,7 +29,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <i class="fa fa-list"></i>
-                    角色列表
+                    动作列表
                 </h3>
             </div>
             <div class="panel-body">
@@ -48,9 +48,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label" for="input-filter-description">描述</label>
-                                    <input type="text" name="filter[description]" value="{$filter['description']|default=''}"
-                                           placeholder="描述" id="input-filter-description" class="form-control"/>
+                                    <label class="control-label" for="input-filter-rule">动作路径</label>
+                                    <input type="text" name="filter[rule]" value="{$filter['rule']|default=''}"
+                                           placeholder="动作路径" id="input-filter-rule" class="form-control"/>
                                 </div>
                             </div>
 
@@ -86,8 +86,8 @@
                 <a href="{:myUrl('index',$filter_order,$order,'title')}"
                    class="{:classOrder($order,'title')}">名称</a>
             </td>            <td class="text-left">
-                <a href="{:myUrl('index',$filter_order,$order,'description')}"
-                   class="{:classOrder($order,'description')}">描述</a>
+                <a href="{:myUrl('index',$filter_order,$order,'rule')}"
+                   class="{:classOrder($order,'rule')}">动作路径</a>
             </td>            <td class="text-left">
                 <a href="{:myUrl('index',$filter_order,$order,'sort')}"
                    class="{:classOrder($order,'sort')}">排序</a>
@@ -104,7 +104,7 @@
                                     <input type="checkbox" name="selected[]" value="{$item->id}"/>
                                 </td>
 
-                                                        <td class="text-left">{$item->title}</td>                        <td class="text-left">{$item->description}</td>                        <td class="text-left">{$item->sort}</td>
+                                                        <td class="text-left">{$item->title}</td>                        <td class="text-left">{$item->rule}</td>                        <td class="text-left">{$item->sort}</td>
 
                                 <td class="text-right">
                                     <a href="{:url('set',['id'=>$item->id])}" data-toggle="tooltip" title="编辑"

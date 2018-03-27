@@ -9,18 +9,18 @@
 namespace app\back\controller;
 
 
-use app\back\validate\RoleValidate;
-use app\back\model\Role;
+use app\back\validate\ActionValidate;
+use app\back\model\Action;
 use think\Controller;
 use think\Db;
 use think\Session;
 
-class RoleController extends Controller
+class ActionController extends Controller
 {
 
     public function indexAction()
     {
-        $model = new Role;
+        $model = new Action;
         //筛选
         //拿到传递数据
         $filter = input('filter/a');
@@ -31,11 +31,11 @@ class RoleController extends Controller
             {
             $model->where('title','like','%'.$filter['title'].'%');
             $filter_order['filter[title]'] = $filter['title'];
-            }            //判断是否有description条件
-            if(isset($filter['description']) && ''!=$filter['description'])
+            }            //判断是否有rule条件
+            if(isset($filter['rule']) && ''!=$filter['rule'])
             {
-            $model->where('description','like','%'.$filter['description'].'%');
-            $filter_order['filter[description]'] = $filter['description'];
+            $model->where('rule','like','%'.$filter['rule'].'%');
+            $filter_order['filter[rule]'] = $filter['rule'];
             }
 
         //排序
@@ -70,7 +70,7 @@ class RoleController extends Controller
             return $this->redirect('index');
         }
         //批量删除
-        Role::destroy($selected);
+        Action::destroy($selected);
         return $this->redirect('index');
     }
 
@@ -87,7 +87,7 @@ class RoleController extends Controller
                 $data = [];
                 if (!empty($id))
                 {
-                    $data = Db::name('role')->find($id);
+                    $data = Db::name('action')->find($id);
                 }
             } else {
                 $message = Session::get('message');
@@ -99,7 +99,7 @@ class RoleController extends Controller
         } elseif ($request->isPost()) {
             //POST请求,数据入库
             $post_result = input('post.');
-            $validate = new RoleValidate;
+            $validate = new ActionValidate;
             if (!$validate->batch(true)->check($post_result)) {
                 return $this->redirect('set', [], 302, [
                     'message' => $validate->getError(),
@@ -107,7 +107,7 @@ class RoleController extends Controller
                 ]);
             } else {
                 //保存数据
-                $model = new Role;
+                $model = new Action;
                 if (isset($post_result['id']))
                 {
                     $model = $model->find($post_result['id']);

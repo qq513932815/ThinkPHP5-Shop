@@ -135,6 +135,18 @@ class AdminController extends Controller
         $id = input('id');
         $this->assign('id',$id);
         $request = request();
+
+        //角色列表获取
+        $role_list = Db::name('role')->select();
+        $this->assign('role_list',$role_list);
+
+        $checked_roles = Db::name('admin_role')->where([
+            'admin_id' => $id
+        ])->column('admin_id');
+        $this->assign('checked_roles',$checked_roles);
+
+
+
         if ($request->isGet()) {
             //GET请求
             if (Session::get('message') == '' && Session::get('data') == '') {

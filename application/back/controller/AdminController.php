@@ -20,9 +20,14 @@ class AdminController extends Controller
 
     public function loginAction()
     {
+
         $request = request();
         if ($request->isGet())
         {
+            if (Session::get('admin'))
+            {
+                return $this->redirect('site/index');
+            }
             //GET请求
             if (Session::get('message') == '' && Session::get('data') == '') {
                 $message = '';
@@ -49,7 +54,11 @@ class AdminController extends Controller
                 //设置登录状态
                 Session::set('admin',$admin);
                 //跳转首页
-                return $this->redirect('site/index');
+
+                //定义路由，判断session是否储存了用户之前访问的网址
+                //Session::pull('route') get&&del
+                $route = Session::has('route')?Session::pull('route'):'site/index';
+                return $this->redirect($route);
             }else{
                 //跳转到登录页面 错误信息返回到login-get方法
                 $this->redirect('login',[],302,[
@@ -66,6 +75,7 @@ class AdminController extends Controller
     {
         Session::delete('admin');
         return $this->redirect('login');
+
     }
 
     public function indexAction()

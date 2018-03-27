@@ -33,13 +33,9 @@ class CheckAuth
         //检测用户是否登录
         if(!Session::has('admin'))
         {
+            Session::set('route',$request->path());
             redirect('back/admin/login')->send();
             die;
-        }else{
-            //定义路由，判断session是否储存了用户之前访问的网址
-            //Session::pull('route') get&&del
-            $route = 'site/index';
-            redirect($route);//Session::has('route')?Session::pull('route'):
         }
     }
 }

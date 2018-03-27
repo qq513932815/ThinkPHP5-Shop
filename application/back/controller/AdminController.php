@@ -62,6 +62,12 @@ class AdminController extends Controller
         }
     }
 
+    public function  logoutAction()
+    {
+        Session::delete('admin');
+        return $this->redirect('login');
+    }
+
     public function indexAction()
     {
         $model = new Admin;

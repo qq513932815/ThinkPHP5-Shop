@@ -106,7 +106,7 @@
                                         {foreach $role_list as $role}
                                         <div class="col-sm-3">
                                             <label for="input-roles-{$role['id']}">
-                                                <input type="checkbox" name="roles[]" value="1" class="form-control" id="input-roles-{$role['id']}"  data-is_super=1 {if condition="in_array($role['id'],$checked_roles)"} checked {/if}>
+                                                <input type="checkbox" name="roles[]" value="{$role['id']}" class="form-control" id="input-roles-{$role['id']}"  data-is_super=1 {if condition="in_array($role['id'],$checked_roles)"} checked {/if}>
                                                 {$role['title']}</label>
                                         </div>
                                         {/foreach}

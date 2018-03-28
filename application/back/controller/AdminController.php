@@ -140,15 +140,15 @@ class AdminController extends Controller
         $role_list = Db::name('role')->select();
         $this->assign('role_list',$role_list);
 
+        //用户已拥有的权限
         $checked_roles = Db::name('admin_role')->where([
             'admin_id' => $id
-        ])->column('admin_id');
+        ])->column('role_id');
         $this->assign('checked_roles',$checked_roles);
 
 
-
         if ($request->isGet()) {
-            //GET请求
+            //GET请求hg*9*
             if (Session::get('message') == '' && Session::get('data') == '') {
                 $message = [];
                 $data = [];
@@ -187,6 +187,33 @@ class AdminController extends Controller
 
                 $model->allowField(true)->save($post_result);
                 if ($request) {
+
+
+                    //获取用户传递的roles
+                    $roles = input('roles/a',[]);
+                    //判断用户删除的权限
+                    $deletes = array_diff($checked_roles,$roles);
+//                    print_r($deletes) ;
+//                    dump($model->id);
+//                    die;
+                    Db::name('admin_role')->where([
+                        'admin_id' => $model->id,
+                        'role_id' => ['in',$deletes]
+                    ])->delete();
+
+                    //判断用户新增的权限
+                    $inserts = array_diff($roles,$checked_roles);
+                    $rows = array_map(function ($role_id) use ($model)
+                    {
+                        return [
+                            'admin_id' => $model->id,
+                            'role_id' => $role_id
+                        ];
+                    },$inserts);
+
+                    Db::name('admin_role')->insertAll($rows);
+
+
                     return $this->redirect('index');
                 } else {
                     return $this->redirect('create');

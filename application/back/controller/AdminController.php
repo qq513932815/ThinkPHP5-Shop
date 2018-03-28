@@ -21,18 +21,19 @@ class AdminController extends Controller
 
     public function loginAction()
     {
-        $pri = new Privilege();
-        $a = $pri->getAdminAction();
-        dump($a);
-        die;
+//        $pri = new Privilege();
+//        $a = $pri->getAdminAction();
+//        dump($a);
+//        die;
 
         $request = request();
         if ($request->isGet())
         {
-            if (Session::get('admin'))
-            {
-                return $this->redirect('site/index');
-            }
+            //xxxxxxxxxxxxxxxxxxxxxxxxxxxx登录后手动进入登录页面验证（待解决）xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+//            if (Session::get('admin'))
+//            {
+//                return $this->redirect('site/index');
+//            }
             //GET请求
             if (Session::get('message') == '' && Session::get('data') == '') {
                 $message = '';

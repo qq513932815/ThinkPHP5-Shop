@@ -9,6 +9,7 @@
 namespace app\back\behavior;
 
 
+use priv\Privilege;
 use think\Session;
 
 class CheckAuth
@@ -36,6 +37,15 @@ class CheckAuth
             Session::set('route',$request->path());
             redirect('back/admin/login')->send();
             die;
+        }
+
+        //判断用户是否有权限访问每一个动作
+        if (!Privilege::checkPrivAction($request->path()))
+        {
+            echo $request->path();
+            redirect('back/admin/login',[],302,[
+                'message' => '你没有权限'
+            ])->send();die;
         }
     }
 }

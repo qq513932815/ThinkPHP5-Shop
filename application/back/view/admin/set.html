@@ -106,7 +106,7 @@
                                         {foreach $role_list as $role}
                                         <div class="col-sm-3">
                                             <label for="input-roles-{$role['id']}">
-                                                <input type="checkbox" name="roles[]" value="{$role['id']}" class="form-control" id="input-roles-{$role['id']}"  data-is_super=1 {if condition="in_array($role['id'],$checked_roles)"} checked {/if}>
+                                                <input type="checkbox" name="roles[]" value="{$role['id']}" class="form-control" id="input-roles-{$role['id']}"  data-is_super='{if $role["id"]==1}1{else/}0{/if}' {if condition="in_array($role['id'],$checked_roles)"} checked {/if}>
                                                 {$role['title']}</label>
                                         </div>
                                         {/foreach}
@@ -121,4 +121,23 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        var root =$(":checkbox[name='roles[]'][data-is_super=1]");
+        var childs = $(":checkbox[name='roles[]'][data-is_super=0]")
+        root.click(function () {
+            if ($(this).prop('checked'))
+            {
+                childs.prop('disabled',true);
+            }else{
+                childs.prop('disabled',false);
+            }
+        });
+
+        if(root.prop('checked'))
+        {
+            childs.prop('disabled',true);
+        }
+    })
+</script>
 {/block}

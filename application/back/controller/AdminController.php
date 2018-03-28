@@ -14,12 +14,17 @@ use app\back\model\Admin;
 use think\Controller;
 use think\Db;
 use think\Session;
+use priv\Privilege;
 
 class AdminController extends Controller
 {
 
     public function loginAction()
     {
+        $pri = new Privilege();
+        $a = $pri->getAdminAction();
+        dump($a);
+        die;
 
         $request = request();
         if ($request->isGet())

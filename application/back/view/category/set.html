@@ -70,7 +70,7 @@
 
                                     <option value="0">顶级分类</option>
                                     {foreach $category_list as $category}
-                                    <option value="{$category['id']}" {if condition="$category['parent_id']==$category['id']"}selected{/if}>
+                                    <option value="{$category['id']}" {if condition="$data['parent_id']==$category['parent_id']"}selected{/if}>
                                         {:str_repeat('&nbsp;',$category['level']*4)}{$category['title']}</option>
                                     {/foreach}
                                 </select>

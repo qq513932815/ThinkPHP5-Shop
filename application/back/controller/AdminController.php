@@ -63,7 +63,8 @@ class AdminController extends Controller
 
                 //定义路由，判断session是否储存了用户之前访问的网址
                 //Session::pull('route') get&&del
-                $route = Session::has('route')?Session::pull('route'):'site/index';
+                $route = explode('/',Session::has('route')?Session::pull('route'):'site/index')[1];
+//                echo $route;die;
                 return $this->redirect($route);
             }else{
                 //跳转到登录页面 错误信息返回到login-get方法

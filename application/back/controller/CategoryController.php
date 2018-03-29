@@ -41,7 +41,7 @@ class CategoryController extends Controller
     public function setAction()
     {
         //获取当前id
-        $id = input('get.id');
+        $id = input('id');
         $this->assign('id',$id);
         $request = request();
         if ($request->isGet()) {
@@ -57,6 +57,9 @@ class CategoryController extends Controller
                 $message = Session::get('message');
                 $data = Session::get('data');
             }
+
+            //分配一下全部的category
+            $this->assign('category_list',(new Category())->getTree());
             $this->assign('message', $message);
             $this->assign('data', $data);
             return $this->fetch();

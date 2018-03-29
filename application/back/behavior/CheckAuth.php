@@ -17,6 +17,8 @@ class CheckAuth
     public function run(&$params)
     {
         $request= request();
+//        dump($request->controller());
+//        die;
         $ext = [
             'admin' => ['login','aaa']
         ];

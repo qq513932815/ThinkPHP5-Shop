@@ -1,0 +1,257 @@
+{extend name="common/layout" /}
+
+{block name="title"}商品表管理{/block}
+{block name="content"}
+<div id="content">
+
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-create" data-toggle="tooltip" title="保存" class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{:url('index')}" data-toggle="tooltip" title="取消" class="btn btn-default">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>商品表{if condition="!is_null($id)"}修改{else/}创建{/if}</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/back/site/index.html">首页</a>
+                </li>
+                <li>
+                    <a href="/back/brand/index.html">商品表</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-pencil"></i>
+                    商品表{if condition="!is_null($id)"}修改{else/}创建{/if}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="{:url('set')}" method="post" enctype="multipart/form-data" id="form-create"
+                      class="form-horizontal">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-general" data-toggle="tab">基本信息</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab-general">
+
+                            {if condition="!is_null($id)"}
+                            <input type="hidden" name="id" value="{$id}">
+                            {/if}
+
+                            
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-title">商品标题</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="title" placeholder="商品标题" value="{$data['title']|default=''}"
+                                       id="input-title" class="form-control"/>
+
+                                {if condition="isset($message['title'])"}
+                                <label class="text-danger" id="input-title-error" for="input-title">{$message['title']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-upc">条码</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="upc" placeholder="条码" value="{$data['upc']|default=''}"
+                                       id="input-upc" class="form-control"/>
+
+                                {if condition="isset($message['upc'])"}
+                                <label class="text-danger" id="input-upc-error" for="input-upc">{$message['upc']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <lael class="col-sm-2 control-label" for="input-image">缩略图</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="image" placeholder="缩略图" value="{$data['image']|default=''}"
+                                       id="input-image" class="form-control"/>
+
+                                {if condition="isset($message['image'])"}
+                                <label class="text-danger" id="input-image-error" for="input-image">{$message['image']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-inventory">库存</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="inventory" placeholder="库存" value="{$data['inventory']|default=''}"
+                                       id="input-inventory" class="form-control" style="width:20%; float:left;margin-right: 5%;"/>
+                                <input type="text" name="unit_id" placeholder="库存单位" value="{$data['unit_id']|default=''}"
+                                       id="input-unit_id" class="form-control" style="width:20%;"/>
+                                {if condition="isset($message['inventory'])"}
+                                <label class="text-danger" id="input-inventory-error" for="input-inventory">{$message['inventory']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <lael class="col-sm-2 control-label" for="input-mininum">最小起售</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="mininum" placeholder="最小起售" value="{$data['mininum']|default=''}"
+                                       id="input-mininum" class="form-control"/>
+
+                                {if condition="isset($message['mininum'])"}
+                                <label class="text-danger" id="input-mininum-error" for="input-mininum">{$message['mininum']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-price">售价</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="price" placeholder="售价" value="{$data['price']|default=''}"
+                                       id="input-price" class="form-control"/>
+
+                                {if condition="isset($message['price'])"}
+                                <label class="text-danger" id="input-price-error" for="input-price">{$message['price']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <lael class="col-sm-2 control-label" for="input-price_orign">原价</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="price_orign" placeholder="原价" value="{$data['price_orign']|default=''}"
+                                       id="input-price_orign" class="form-control"/>
+
+                                {if condition="isset($message['price_orign'])"}
+                                <label class="text-danger" id="input-price_orign-error" for="input-price_orign">{$message['price_orign']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-is_shopping">配送支持</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="is_shopping" placeholder="配送支持" value="{$data['is_shopping']|default=''}"
+                                       id="input-is_shopping" class="form-control"/>
+
+                                {if condition="isset($message['is_shopping'])"}
+                                <label class="text-danger" id="input-is_shopping-error" for="input-is_shopping">{$message['is_shopping']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-date_avaliable">起售时间</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="date_avaliable" placeholder="起售时间" value="{$data['date_avaliable']|default=''}"
+                                       id="input-date_avaliable" class="form-control"/>
+
+                                {if condition="isset($message['date_avaliable'])"}
+                                <label class="text-danger" id="input-date_avaliable-error" for="input-date_avaliable">{$message['date_avaliable']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-status">商品状态</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="status" placeholder="商品状态" value="{$data['status']|default=''}"
+                                       id="input-status" class="form-control"/>
+
+                                {if condition="isset($message['status'])"}
+                                <label class="text-danger" id="input-status-error" for="input-status">{$message['status']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-brind_id">品牌id</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="brind_id" placeholder="品牌id" value="{$data['brind_id']|default=''}"
+                                       id="input-brind_id" class="form-control"/>
+
+                                {if condition="isset($message['brind_id'])"}
+                                <label class="text-danger" id="input-brind_id-error" for="input-brind_id">{$message['brind_id']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-description">描述</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="description" placeholder="描述" value="{$data['description']|default=''}"
+                                       id="input-description" class="form-control"/>
+
+                                {if condition="isset($message['description'])"}
+                                <label class="text-danger" id="input-description-error" for="input-description">{$message['description']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-category_id">类别</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="category_id" placeholder="类别" value="{$data['category_id']|default=''}"
+                                       id="input-category_id" class="form-control"/>
+
+                                {if condition="isset($message['category_id'])"}
+                                <label class="text-danger" id="input-category_id-error" for="input-category_id">{$message['category_id']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+                        <div class="form-group required">
+                            <lael class="col-sm-2 control-label" for="input-sort">排序</lael>
+                            <div class="col-sm-10">
+                                <input type="text" name="sort" placeholder="排序" value="{$data['sort']|default=''}"
+                                       id="input-sort" class="form-control"/>
+
+                                {if condition="isset($message['sort'])"}
+                                <label class="text-danger" id="input-sort-error" for="input-sort">{$message['sort']}</label>
+                                {else/}
+
+                                {/if}
+
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

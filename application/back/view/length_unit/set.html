@@ -1,6 +1,6 @@
 {extend name="common/layout" /}
 
-{block name="title"}分类表管理{/block}
+{block name="title"}管理{/block}
 {block name="content"}
 <div id="content">
 
@@ -14,13 +14,13 @@
                     <i class="fa fa-reply"></i>
                 </a>
             </div>
-            <h1>分类表{if condition="!is_null($id)"}修改{else/}创建{/if}</h1>
+            <h1>{if condition="!is_null($id)"}修改{else/}创建{/if}</h1>
             <ul class="breadcrumb">
                 <li>
                     <a href="/back/site/index.html">首页</a>
                 </li>
                 <li>
-                    <a href="/back/brand/index.html">分类表</a>
+                    <a href="/back/brand/index.html"></a>
                 </li>
             </ul>
         </div>
@@ -30,7 +30,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">
                     <i class="fa fa-pencil"></i>
-                    分类表{if condition="!is_null($id)"}修改{else/}创建{/if}
+                    {if condition="!is_null($id)"}修改{else/}创建{/if}
                 </h3>
             </div>
             <div class="panel-body">
@@ -50,9 +50,9 @@
 
                             
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-title">分类</lael>
+                            <lael class="col-sm-2 control-label" for="input-title">名称</lael>
                             <div class="col-sm-10">
-                                <input type="text" name="title" placeholder="分类" value="{$data['title']|default=''}"
+                                <input type="text" name="title" placeholder="名称" value="{$data['title']|default=''}"
                                        id="input-title" class="form-control"/>
 
                                 {if condition="isset($message['title'])"}
@@ -63,19 +63,6 @@
 
                             </div>
                         </div>
-                        <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-parent_id">上级分类</lael>
-                            <div class="col-sm-10">
-                                <select name="parent_id" id="input-parent_id" class="form-control">
-
-                                    <option value="0">顶级分类</option>
-                                    {foreach $category_list as $category}
-                                    <option value="{$category['id']}" {if condition="isset($data['parent_id']) && $data['parent_id']==$category['parent_id']"}selected{/if}>
-                                        {:str_repeat('&nbsp;',$category['level']*4)}{$category['title']}</option>
-                                    {/foreach}
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group ">
                             <lael class="col-sm-2 control-label" for="input-sort">排序</lael>
                             <div class="col-sm-10">
@@ -84,20 +71,6 @@
 
                                 {if condition="isset($message['sort'])"}
                                 <label class="text-danger" id="input-sort-error" for="input-sort">{$message['sort']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
-                        <div class="form-group ">
-                            <lael class="col-sm-2 control-label" for="input-is_used">启用状态</lael>
-                            <div class="col-sm-10">
-                                <input type="text" name="is_used" placeholder="启用状态" value="{$data['is_used']|default=''}"
-                                       id="input-is_used" class="form-control"/>
-
-                                {if condition="isset($message['is_used'])"}
-                                <label class="text-danger" id="input-is_used-error" for="input-is_used">{$message['is_used']}</label>
                                 {else/}
 
                                 {/if}

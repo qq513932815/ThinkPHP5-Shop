@@ -9,27 +9,51 @@
 namespace app\back\controller;
 
 
-use app\back\validate\CategoryValidate;
-use app\back\model\Category;
-use think\Cache;
+use app\back\validate\LengthUnitValidate;
+use app\back\model\LengthUnit;
 use think\Controller;
 use think\Db;
 use think\Session;
 
-class CategoryController extends Controller
+class LengthUnitController extends Controller
 {
-    const CACHE_TREE_KEY = 'category_tree';
+
     public function indexAction()
     {
-        $model = new Category;
-        $tree = $model->getTree();
-        if (!(Cache::get(self::CACHE_TREE_KEY)))
+        $model = new LengthUnit;
+        //筛选
+        //拿到传递数据
+        $filter = input('filter/a');
+        $filter_order = [];
+
+                    //判断是否有title条件
+            if(isset($filter['title']) && ''!=$filter['title'])
+            {
+            $model->where('title','like','%'.$filter['title'].'%');
+            $filter_order['filter[title]'] = $filter['title'];
+            }
+
+        //排序
+        $order = input('order/a');
+        if(!empty($order))
         {
-            //没有缓存,去数据库取数据
-            Cache::set(self::CACHE_TREE_KEY,$tree);
+            $model->order([$order['field']=>$order['type']]);
         }
 
-        $this->assign('rows',$tree);
+        //分页
+        $model->where(null);
+        $limit = 3;
+        $list = $model->paginate($limit);
+        $start = $list->listRows() * ($list->currentPage()-1) +1;
+//       $end = min($list->total(),$list->currentPage()*$list->listRows());
+        $end = $start + $list->listRows()-1;
+        $this->assign('start',$start);
+        $this->assign('end',$end);
+        $this->assign('list',$list);
+
+        $this->assign('filter',$filter);
+        $this->assign('order',$order);
+        $this->assign('filter_order',$filter_order);
         return $this->fetch();
     }
 
@@ -41,14 +65,14 @@ class CategoryController extends Controller
             return $this->redirect('index');
         }
         //批量删除
-        Category::destroy($selected);
+        LengthUnit::destroy($selected);
         return $this->redirect('index');
     }
 
     public function setAction()
     {
         //获取当前id
-        $id = input('id');
+        $id = input('get.id');
         $this->assign('id',$id);
         $request = request();
         if ($request->isGet()) {
@@ -58,22 +82,19 @@ class CategoryController extends Controller
                 $data = [];
                 if (!empty($id))
                 {
-                    $data = Db::name('category')->find($id);
+                    $data = Db::name('length_unit')->find($id);
                 }
             } else {
                 $message = Session::get('message');
                 $data = Session::get('data');
             }
-
-            //分配一下全部的category
-            $this->assign('category_list',(new Category())->getTree());
             $this->assign('message', $message);
             $this->assign('data', $data);
             return $this->fetch();
         } elseif ($request->isPost()) {
             //POST请求,数据入库
             $post_result = input('post.');
-            $validate = new CategoryValidate;
+            $validate = new LengthUnitValidate;
             if (!$validate->batch(true)->check($post_result)) {
                 return $this->redirect('set', [], 302, [
                     'message' => $validate->getError(),
@@ -81,7 +102,7 @@ class CategoryController extends Controller
                 ]);
             } else {
                 //保存数据
-                $model = new Category;
+                $model = new LengthUnit;
                 if (isset($post_result['id']))
                 {
                     $model = $model->find($post_result['id']);

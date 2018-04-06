@@ -87,7 +87,7 @@ class ProductController extends Controller
     public function setAction()
     {
         //获取当前id
-        $id = input('get.id');
+        $id = input('id');
         $this->assign('id',$id);
         $request = request();
         if ($request->isGet()) {
@@ -103,15 +103,14 @@ class ProductController extends Controller
                 $message = Session::get('message');
                 $data = Session::get('data');
             }
+            //分配单位到view页面
+            $this->assign('unit_list',Db::name('unit')->select());
             $this->assign('message', $message);
             $this->assign('data', $data);
             return $this->fetch();
         } elseif ($request->isPost()) {
             //POST请求,数据入库
             $post_result = input('post.');
-
-            dump(uniqid());die;//唯一键 guid
-
             $validate = new ProductValidate;
             if (!$validate->batch(true)->check($post_result)) {
                 return $this->redirect('set', [], 302, [

@@ -15,6 +15,8 @@ class ProductValidate extends Validate
 {
     protected $rule = [
         'title' => 'require',
+        'inventory' => 'require|integer',
+        'mininum' => 'integer',
 
     ];
 

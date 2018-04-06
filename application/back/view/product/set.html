@@ -93,17 +93,22 @@
                         </div>
                         <div class="form-group required">
                             <lael class="col-sm-2 control-label" for="input-inventory">库存</lael>
-                            <div class="col-sm-10">
+                            <div class="col-sm-4">
                                 <input type="text" name="inventory" placeholder="库存" value="{$data['inventory']|default=''}"
-                                       id="input-inventory" class="form-control" style="width:20%; float:left;margin-right: 5%;"/>
-                                <input type="text" name="unit_id" placeholder="库存单位" value="{$data['unit_id']|default=''}"
-                                       id="input-unit_id" class="form-control" style="width:20%;"/>
+                                       id="input-inventory" class="form-control"/>
                                 {if condition="isset($message['inventory'])"}
                                 <label class="text-danger" id="input-inventory-error" for="input-inventory">{$message['inventory']}</label>
                                 {else/}
 
                                 {/if}
-
+                            </div>
+                            <div class="col-sm-4">
+                                <select name="unit_id" id="input-unit_id" class="form-control">
+                                    <option value="0">未选择</option>
+                                    {foreach $unit_list as $unit}
+                                    <option value="{$unit['id']}">{$unit['title']}</option>
+                                    {/foreach}
+                                </select>
                             </div>
                         </div>
                         <div class="form-group ">
@@ -149,24 +154,21 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-is_shopping">配送支持</lael>
-                            <div class="col-sm-10">
-                                <input type="text" name="is_shopping" placeholder="配送支持" value="{$data['is_shopping']|default=''}"
-                                       id="input-is_shopping" class="form-control"/>
-
-                                {if condition="isset($message['is_shopping'])"}
-                                <label class="text-danger" id="input-is_shopping-error" for="input-is_shopping">{$message['is_shopping']}</label>
-                                {else/}
-
-                                {/if}
-
+                            <lael class="col-sm-2 control-label">配送支持</lael>
+                            <div class="col-sm-1">
+                                <input type="radio" name="is_shopping" value="1"
+                                       id="input-is_shopping_yes" class="form-control"/><lable for="input-is_shopping_yes">是</lable>
+                            </div>
+                            <div class="col-sm-1">
+                                <input type="radio" name="is_shopping" value="0"
+                                       id="input-is_shopping_no" class="form-control"/><lable for="input-is_shopping_no">否</lable>
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-date_avaliable">起售时间</lael>
+                            <lael class="col-sm-2 control-label" for="input-date_avaliable">起送时间</lael>
                             <div class="col-sm-10">
-                                <input type="text" name="date_avaliable" placeholder="起售时间" value="{$data['date_avaliable']|default=''}"
-                                       id="input-date_avaliable" class="form-control"/>
+                                <input type="text" name="date_avaliable" placeholder="起送时间" value="{$data['date_avaliable']|default=''}"
+                                       id="input-date_avaliable" class="form-control bootstrap-datetimepicker-widget"/>
 
                                 {if condition="isset($message['date_avaliable'])"}
                                 <label class="text-danger" id="input-date_avaliable-error" for="input-date_avaliable">{$message['date_avaliable']}</label>
@@ -254,4 +256,15 @@
         </div>
     </div>
 </div>
+
+<link rel="stylesheet" href="__STATIC__/datetimepicker/bootstrap-datetimepicker.min.css">
+<script src="__STATIC__/datetimepicker/moment.js"></script>
+<script src="__STATIC__/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script type="javascript">
+    $(function () {
+        $('.bootstrap-datetimepicker-widget').datetimepicker({
+            format : 'yyyy-mm-dd hh:ii'
+        });
+    });
+</script>
 {/block}

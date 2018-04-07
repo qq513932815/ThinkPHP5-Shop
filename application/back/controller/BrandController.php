@@ -116,7 +116,7 @@ class BrandController extends Controller
     public function setAction()
     {
         //获取当前id
-        $id = input('get.id');
+        $id = input('id');
         $this->assign('id',$id);
         $request = request();
         if ($request->isGet()) {
@@ -137,7 +137,10 @@ class BrandController extends Controller
             return $this->fetch();
         } elseif ($request->isPost()) {
             //POST请求,数据入库
-            $post_result = input('post.');
+
+            $post_result = $request->post();
+            $post_result['logo'] = $request->file('logo');
+
             $brand_validate = new BrandValidate();
             if (!$brand_validate->batch(true)->check($post_result)) {
                 return $this->redirect('create', [], 302, [
@@ -145,6 +148,14 @@ class BrandController extends Controller
                     'data' => $post_result
                 ]);
             } else {
+
+                //转存文件
+                if ($post_result['logo'])
+                {
+                    $info = $post_result['logo']->move(ROOT_PATH.'public/upload/brand');
+                    $post_result['logo'] = $info->getSaveName();
+                }
+
                 //保存数据
                 $model = new BrandModel();
                 if (isset($post_result['id']))

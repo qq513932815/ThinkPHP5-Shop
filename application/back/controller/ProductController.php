@@ -154,4 +154,10 @@ class ProductController extends Controller
         return $this->fetch();
     }
 
+    public function uploadAction()
+    {
+        $file = request()->file('file');
+        dump($file);
+    }
+
 }

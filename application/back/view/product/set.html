@@ -85,17 +85,14 @@
                         </div>
                         <div class="form-group ">
                             <label class="col-sm-2 control-label" for="input-image">缩略图</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="image" placeholder="缩略图" value="{$data['image']|default=''}"
-                                       id="input-image" class="form-control"/>
+                            <span class="btn btn-success fileinput-button">
+                                <i class="glyphicon glyphicon-plus"></i>
+                                <span>选择主图像</span>
+                                <input id="fileupload" type="file" name="file">
+                            </span>
+                                <input type="hidden" name="image" value="" id="input-image" class="form-control">
+                                <input type="hidden" name="image_thumb" value="" id="input-image-thumb" class="form-control">
 
-                                {if condition="isset($message['image'])"}
-                                <label class="text-danger" id="input-image-error" for="input-image">{$message['image']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
                         </div>
                         <div class="form-group required">
                             <label class="col-sm-2 control-label" for="input-inventory">库存</label>
@@ -280,16 +277,44 @@
         </div>
     </div>
 </div>
+{/block}
+
+{block name="appendCss"}
 <!--日历插件-->
 <link rel="stylesheet" href="__STATIC__/datetimepicker/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="__STATIC__/jqueryFileUpload/css/jquery.fileupload.css">
+{/block}
+
+{block name="appendJs"}
+<!--日历插件-->
 <script src="__STATIC__/datetimepicker/moment.js"></script>
 <script src="__STATIC__/datetimepicker/bootstrap-datetimepicker.min.js"></script>
 
 <!--ckeditor-->
 <script src="__STATIC__/ckeditor/ckeditor.js"></script>
 <script src="__STATIC__/ckeditor/config.js"></script>
-<script type="javascript">
+
+<!--FileUpload-->
+<script src="__STATIC__/jqueryFileUpload/js/vendor/jquery.ui.widget.js"></script>
+<script src="__STATIC__/jqueryFileUpload/js/jquery.iframe-transport.js"></script>
+<script src="__STATIC__/jqueryFileUpload/js/jquery.fileupload.js"></script>
+
+<script type="text/javascript">
     $(function () {
+
+        //图片传递到后台的路径
+        var url = '{:url("product/upload")}';
+        $('#fileupload').fileupload({
+            url: url,
+            dataType: 'json',
+            done: function (e, data) {
+
+                console.log(e);
+                console.log(data);
+            }
+        }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+
         $('.bootstrap-datetimepicker-widget').datetimepicker({
                 format:'YY-MM-DD hh:ii'
         });

@@ -40,6 +40,12 @@
                         <li class="active">
                             <a href="#tab-general" data-toggle="tab">基本信息</a>
                         </li>
+                        <li>
+                            <a href="#tab-extra" data-toggle="tab">扩展信息</a>
+                        </li>
+                        <li>
+                            <a href="#tab-des" data-toggle="tab">描述</a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="tab-general">
@@ -153,102 +159,108 @@
 
                             </div>
                         </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label">配送支持</label>
-                            <div class="col-sm-1">
-                                <input type="radio" name="is_shopping" value="1"
-                                       id="input-is_shopping_yes" class="form-control" checked/><lable for="input-is_shopping_yes">是</lable>
+                        </div>
+                        <div class="tab-pane" id="tab-extra">
+
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label">配送支持</label>
+                                <div class="col-sm-1">
+                                    <input type="radio" name="is_shopping" value="1"
+                                           id="input-is_shopping_yes" class="form-control" checked/><lable for="input-is_shopping_yes">是</lable>
+                                </div>
+                                <div class="col-sm-1">
+                                    <input type="radio" name="is_shopping" value="0"
+                                           id="input-is_shopping_no" class="form-control"/><lable for="input-is_shopping_no">否</lable>
+                                </div>
                             </div>
-                            <div class="col-sm-1">
-                                <input type="radio" name="is_shopping" value="0"
-                                       id="input-is_shopping_no" class="form-control"/><lable for="input-is_shopping_no">否</lable>
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" for="input-date_avaliable">起送时间</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="date_avaliable" placeholder="起送时间" value="{$data['date_avaliable']|default=''}"
+                                           id="input-date_avaliable" class="form-control bootstrap-datetimepicker-widget"/>
+
+                                    {if condition="isset($message['date_avaliable'])"}
+                                    <label class="text-danger" id="input-date_avaliable-error" for="input-date_avaliable">{$message['date_avaliable']}</label>
+                                    {else/}
+
+                                    {/if}
+
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" for="input-status">商品状态</label>
+                                <div class="col-sm-10">
+                                    <!--<input type="text" name="status" placeholder="商品状态" value="{$data['status']|default=''}"-->
+                                    <!--id="input-status" class="form-control"/>-->
+                                    <select name="status" id="input-status" class="form-control">
+                                        <option value="0">下架</option>
+                                        <option value="1">上架</option>
+                                    </select>
+                                    {if condition="isset($message['status'])"}
+                                    <label class="text-danger" id="input-status-error" for="input-status">{$message['status']}</label>
+                                    {else/}
+
+                                    {/if}
+
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" for="input-brand_id">品牌</label>
+                                <div class="col-sm-10">
+                                    <select name="unit_id" id="input-brand_id" class="form-control">
+                                        <option value="0">未选择</option>
+                                        {foreach $brand_list as $brand}
+                                        <option value="{$brand['id']}">{$brand['title']}</option>
+                                        {/foreach}
+                                    </select>
+
+                                    {if condition="isset($message['brand_id'])"}
+                                    <label class="text-danger" id="input-brand_id-error" for="input-brand_id">{$message['brand_id']}</label>
+                                    {else/}
+
+                                    {/if}
+
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" for="input-category_id">类别</label>
+                                <div class="col-sm-10">
+                                    <select name="unit_id" id="input-category_id" class="form-control">
+                                        {foreach $category_list as $category}
+                                        <option value="{$category['id']}">{:str_repeat('&nbsp;',$category['level']*4)}{$category['title']}</option>
+                                        {/foreach}
+                                    </select>
+
+                                    {if condition="isset($message['category_id'])"}
+                                    <label class="text-danger" id="input-category_id-error" for="input-category_id">{$message['category_id']}</label>
+                                    {else/}
+
+                                    {/if}
+
+                                </div>
+                            </div>
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" for="input-sort">排序</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="sort" placeholder="排序" value="{$data['sort']|default=''}"
+                                           id="input-sort" class="form-control"/>
+
+                                    {if condition="isset($message['sort'])"}
+                                    <label class="text-danger" id="input-sort-error" for="input-sort">{$message['sort']}</label>
+                                    {else/}
+
+                                    {/if}
+
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="input-date_avaliable">起送时间</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="date_avaliable" placeholder="起送时间" value="{$data['date_avaliable']|default=''}"
-                                       id="input-date_avaliable" class="form-control bootstrap-datetimepicker-widget"/>
+                        <div class="tab-pane" id="tab-des">
 
-                                {if condition="isset($message['date_avaliable'])"}
-                                <label class="text-danger" id="input-date_avaliable-error" for="input-date_avaliable">{$message['date_avaliable']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="input-status">商品状态</label>
-                            <div class="col-sm-10">
-                                <!--<input type="text" name="status" placeholder="商品状态" value="{$data['status']|default=''}"-->
-                                       <!--id="input-status" class="form-control"/>-->
-                                <select name="status" id="input-status" class="form-control">
-                                    <option value="0">下架</option>
-                                    <option value="1">上架</option>
-                                </select>
-                                {if condition="isset($message['status'])"}
-                                <label class="text-danger" id="input-status-error" for="input-status">{$message['status']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="input-brand_id">品牌</label>
-                            <div class="col-sm-10">
-                                <select name="unit_id" id="input-brand_id" class="form-control">
-                                    <option value="0">未选择</option>
-                                    {foreach $brand_list as $brand}
-                                    <option value="{$brand['id']}">{$brand['title']}</option>
-                                    {/foreach}
-                                </select>
-
-                                {if condition="isset($message['brand_id'])"}
-                                <label class="text-danger" id="input-brand_id-error" for="input-brand_id">{$message['brand_id']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="input-category_id">类别</label>
-                            <div class="col-sm-10">
-                                <select name="unit_id" id="input-category_id" class="form-control">
-                                    {foreach $category_list as $category}
-                                    <option value="{$category['id']}">{:str_repeat('&nbsp;',$category['level']*4)}{$category['title']}</option>
-                                    {/foreach}
-                                </select>
-
-                                {if condition="isset($message['category_id'])"}
-                                <label class="text-danger" id="input-category_id-error" for="input-category_id">{$message['category_id']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <label class="col-sm-2 control-label" for="input-sort">排序</label>
-                            <div class="col-sm-10">
-                                <input type="text" name="sort" placeholder="排序" value="{$data['sort']|default=''}"
-                                       id="input-sort" class="form-control"/>
-
-                                {if condition="isset($message['sort'])"}
-                                <label class="text-danger" id="input-sort-error" for="input-sort">{$message['sort']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
                             <div class="form-group required">
                                 <label class="col-sm-2 control-label" for="input-description">描述</label>
                                 <div class="col-sm-10">
                                     <!--<input type="text" name="description" placeholder="描述" value="{$data['description']|default=''}"-->
-                                           <!--id="input-description" class="form-control"/>-->
+                                    <!--id="input-description" class="form-control"/>-->
                                     <textarea name="description"  class="form-control" id="input-description">
 
                                     </textarea>

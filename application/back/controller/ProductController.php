@@ -125,6 +125,9 @@ class ProductController extends Controller
         } elseif ($request->isPost()) {
             //POST请求,数据入库
             $post_result = input('post.');
+
+//            dump($post_result);die;
+
             $validate = new ProductValidate;
             if (!$validate->batch(true)->check($post_result)) {
                 return $this->redirect('set', [], 302, [

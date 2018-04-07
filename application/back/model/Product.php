@@ -15,7 +15,7 @@ class Product extends Model
 {
     protected function setUpcAttr($value)
     {
-        if (is_null($value))
+        if (is_null($value)||$value == '')
         {
             return uniqid();
         }

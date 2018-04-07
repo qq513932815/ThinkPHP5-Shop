@@ -9,11 +9,13 @@
 namespace app\back\controller;
 
 
+use app\back\model\Category;
 use app\back\validate\ProductValidate;
 use app\back\model\Product;
 use think\Controller;
 use think\Db;
 use think\Session;
+use think\Cache;
 
 class ProductController extends Controller
 {
@@ -83,7 +85,7 @@ class ProductController extends Controller
         Product::destroy($selected);
         return $this->redirect('index');
     }
-
+    const CACHE_TREE_KEY = 'category_tree';
     public function setAction()
     {
         //获取当前id
@@ -105,6 +107,18 @@ class ProductController extends Controller
             }
             //分配单位到view页面
             $this->assign('unit_list',Db::name('unit')->select());
+            $this->assign('brand_list',Db::name('brand')->select());
+
+            $tree = [];
+            if (!($tree = Cache::get(self::CACHE_TREE_KEY)))
+            {
+                $tree = (new Category())->getTree();
+                //没有缓存,去数据库取数据
+                Cache::set(self::CACHE_TREE_KEY,$tree);
+            }
+            $this->assign('category_list',$tree);
+
+
             $this->assign('message', $message);
             $this->assign('data', $data);
             return $this->fetch();

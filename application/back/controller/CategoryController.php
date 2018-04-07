@@ -22,9 +22,10 @@ class CategoryController extends Controller
     public function indexAction()
     {
         $model = new Category;
-        $tree = $model->getTree();
-        if (!(Cache::get(self::CACHE_TREE_KEY)))
+
+        if (!($tree = Cache::get(self::CACHE_TREE_KEY)))
         {
+            $tree = $model->getTree();
             //没有缓存,去数据库取数据
             Cache::set(self::CACHE_TREE_KEY,$tree);
         }

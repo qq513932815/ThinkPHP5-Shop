@@ -50,7 +50,7 @@
 
                             
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-title">商品标题</lael>
+                            <label class="col-sm-2 control-label" for="input-title">商品标题</label>
                             <div class="col-sm-10">
                                 <input type="text" name="title" placeholder="商品标题" value="{$data['title']|default=''}"
                                        id="input-title" class="form-control"/>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-upc">条码</lael>
+                            <label class="col-sm-2 control-label" for="input-upc">条码</label>
                             <div class="col-sm-10">
                                 <input type="text" name="upc" placeholder="条码" value="{$data['upc']|default=''}"
                                        id="input-upc" class="form-control"/>
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <lael class="col-sm-2 control-label" for="input-image">缩略图</lael>
+                            <label class="col-sm-2 control-label" for="input-image">缩略图</label>
                             <div class="col-sm-10">
                                 <input type="text" name="image" placeholder="缩略图" value="{$data['image']|default=''}"
                                        id="input-image" class="form-control"/>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-inventory">库存</lael>
+                            <label class="col-sm-2 control-label" for="input-inventory">库存</label>
                             <div class="col-sm-4">
                                 <input type="text" name="inventory" placeholder="库存" value="{$data['inventory']|default=''}"
                                        id="input-inventory" class="form-control"/>
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <lael class="col-sm-2 control-label" for="input-mininum">最小起售</lael>
+                            <label class="col-sm-2 control-label" for="input-mininum">最小起售</label>
                             <div class="col-sm-10">
                                 <input type="text" name="mininum" placeholder="最小起售" value="{$data['mininum']|default=''}"
                                        id="input-mininum" class="form-control"/>
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-price">售价</lael>
+                            <label class="col-sm-2 control-label" for="input-price">售价</label>
                             <div class="col-sm-10">
                                 <input type="text" name="price" placeholder="售价" value="{$data['price']|default=''}"
                                        id="input-price" class="form-control"/>
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <lael class="col-sm-2 control-label" for="input-price_orign">原价</lael>
+                            <label class="col-sm-2 control-label" for="input-price_orign">原价</label>
                             <div class="col-sm-10">
                                 <input type="text" name="price_orign" placeholder="原价" value="{$data['price_orign']|default=''}"
                                        id="input-price_orign" class="form-control"/>
@@ -154,10 +154,10 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label">配送支持</lael>
+                            <label class="col-sm-2 control-label">配送支持</label>
                             <div class="col-sm-1">
                                 <input type="radio" name="is_shopping" value="1"
-                                       id="input-is_shopping_yes" class="form-control"/><lable for="input-is_shopping_yes">是</lable>
+                                       id="input-is_shopping_yes" class="form-control" checked/><lable for="input-is_shopping_yes">是</lable>
                             </div>
                             <div class="col-sm-1">
                                 <input type="radio" name="is_shopping" value="0"
@@ -165,7 +165,7 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-date_avaliable">起送时间</lael>
+                            <label class="col-sm-2 control-label" for="input-date_avaliable">起送时间</label>
                             <div class="col-sm-10">
                                 <input type="text" name="date_avaliable" placeholder="起送时间" value="{$data['date_avaliable']|default=''}"
                                        id="input-date_avaliable" class="form-control bootstrap-datetimepicker-widget"/>
@@ -179,11 +179,14 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-status">商品状态</lael>
+                            <label class="col-sm-2 control-label" for="input-status">商品状态</label>
                             <div class="col-sm-10">
-                                <input type="text" name="status" placeholder="商品状态" value="{$data['status']|default=''}"
-                                       id="input-status" class="form-control"/>
-
+                                <!--<input type="text" name="status" placeholder="商品状态" value="{$data['status']|default=''}"-->
+                                       <!--id="input-status" class="form-control"/>-->
+                                <select name="status" id="input-status" class="form-control">
+                                    <option value="0">下架</option>
+                                    <option value="1">上架</option>
+                                </select>
                                 {if condition="isset($message['status'])"}
                                 <label class="text-danger" id="input-status-error" for="input-status">{$message['status']}</label>
                                 {else/}
@@ -193,13 +196,17 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-brind_id">品牌id</lael>
+                            <label class="col-sm-2 control-label" for="input-brand_id">品牌</label>
                             <div class="col-sm-10">
-                                <input type="text" name="brind_id" placeholder="品牌id" value="{$data['brind_id']|default=''}"
-                                       id="input-brind_id" class="form-control"/>
+                                <select name="unit_id" id="input-brand_id" class="form-control">
+                                    <option value="0">未选择</option>
+                                    {foreach $brand_list as $brand}
+                                    <option value="{$brand['id']}">{$brand['title']}</option>
+                                    {/foreach}
+                                </select>
 
-                                {if condition="isset($message['brind_id'])"}
-                                <label class="text-danger" id="input-brind_id-error" for="input-brind_id">{$message['brind_id']}</label>
+                                {if condition="isset($message['brand_id'])"}
+                                <label class="text-danger" id="input-brand_id-error" for="input-brand_id">{$message['brand_id']}</label>
                                 {else/}
 
                                 {/if}
@@ -207,24 +214,13 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-description">描述</lael>
+                            <label class="col-sm-2 control-label" for="input-category_id">类别</label>
                             <div class="col-sm-10">
-                                <input type="text" name="description" placeholder="描述" value="{$data['description']|default=''}"
-                                       id="input-description" class="form-control"/>
-
-                                {if condition="isset($message['description'])"}
-                                <label class="text-danger" id="input-description-error" for="input-description">{$message['description']}</label>
-                                {else/}
-
-                                {/if}
-
-                            </div>
-                        </div>
-                        <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-category_id">类别</lael>
-                            <div class="col-sm-10">
-                                <input type="text" name="category_id" placeholder="类别" value="{$data['category_id']|default=''}"
-                                       id="input-category_id" class="form-control"/>
+                                <select name="unit_id" id="input-category_id" class="form-control">
+                                    {foreach $category_list as $category}
+                                    <option value="{$category['id']}">{:str_repeat('&nbsp;',$category['level']*4)}{$category['title']}</option>
+                                    {/foreach}
+                                </select>
 
                                 {if condition="isset($message['category_id'])"}
                                 <label class="text-danger" id="input-category_id-error" for="input-category_id">{$message['category_id']}</label>
@@ -235,7 +231,7 @@
                             </div>
                         </div>
                         <div class="form-group required">
-                            <lael class="col-sm-2 control-label" for="input-sort">排序</lael>
+                            <label class="col-sm-2 control-label" for="input-sort">排序</label>
                             <div class="col-sm-10">
                                 <input type="text" name="sort" placeholder="排序" value="{$data['sort']|default=''}"
                                        id="input-sort" class="form-control"/>
@@ -248,7 +244,23 @@
 
                             </div>
                         </div>
+                            <div class="form-group required">
+                                <label class="col-sm-2 control-label" for="input-description">描述</label>
+                                <div class="col-sm-10">
+                                    <!--<input type="text" name="description" placeholder="描述" value="{$data['description']|default=''}"-->
+                                           <!--id="input-description" class="form-control"/>-->
+                                    <textarea name="description"  class="form-control" id="input-description">
 
+                                    </textarea>
+
+                                    {if condition="isset($message['description'])"}
+                                    <label class="text-danger" id="input-description-error" for="input-description">{$message['description']}</label>
+                                    {else/}
+
+                                    {/if}
+
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -256,15 +268,21 @@
         </div>
     </div>
 </div>
-
+<!--日历插件-->
 <link rel="stylesheet" href="__STATIC__/datetimepicker/bootstrap-datetimepicker.min.css">
 <script src="__STATIC__/datetimepicker/moment.js"></script>
 <script src="__STATIC__/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+
+<!--ckeditor-->
+<script src="__STATIC__/ckeditor/ckeditor.js"></script>
+<script src="__STATIC__/ckeditor/config.js"></script>
 <script type="javascript">
     $(function () {
         $('.bootstrap-datetimepicker-widget').datetimepicker({
-            format : 'yyyy-mm-dd hh:ii'
+                format:'YY-MM-DD hh:ii'
         });
-    });
+
+        CKEDITOR.replace('input-description');
+    })
 </script>
 {/block}

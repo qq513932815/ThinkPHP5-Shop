@@ -157,7 +157,15 @@ class ProductController extends Controller
     public function uploadAction()
     {
         $file = request()->file('file');
-        dump($file);
+        $info = $file->validate(['size' => 1*1024*1024,'ext' => 'jpg,png,gif'])->move(ROOT_PATH.'public/upload/product');
+        if ($info)
+        {
+            //上传成功
+        }else{
+            return [
+                'error' => $file->getError()
+            ];
+        }
     }
 
 }

@@ -92,7 +92,7 @@
                             </span>
                                 <input type="hidden" name="image" value="" id="input-image" class="form-control">
                                 <input type="hidden" name="image_thumb" value="" id="input-image-thumb" class="form-control">
-
+                                <label for="" class="" style="display: none; color: red;" id="label-file-error"></label>
                         </div>
                         <div class="form-group required">
                             <label class="col-sm-2 control-label" for="input-inventory">库存</label>
@@ -308,9 +308,12 @@
             url: url,
             dataType: 'json',
             done: function (e, data) {
-
-                console.log(e);
-                console.log(data);
+                if (data.result.error!='')
+                {
+                    $("#label-file-error").text(data.result.error).show();
+                }else{
+                    $("#label-file-error").text('').hide();
+                }
             }
         }).prop('disabled', !$.support.fileInput)
             .parent().addClass($.support.fileInput ? undefined : 'disabled');

@@ -308,7 +308,7 @@
             url: url,
             dataType: 'json',
             done: function (e, data) {
-                if (data.result.error!='')
+                if (data.result.error)
                 {
                     $("#label-file-error").text(data.result.error).show();
                 }else{

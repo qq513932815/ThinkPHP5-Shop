@@ -161,6 +161,9 @@ class ProductController extends Controller
         if ($info)
         {
             //上传成功
+            return [
+                'success' => 'success'
+            ];
         }else{
             return [
                 'error' => $file->getError()

@@ -14,6 +14,7 @@ use app\back\validate\ProductValidate;
 use app\back\model\Product;
 use think\Controller;
 use think\Db;
+use think\Image;
 use think\Session;
 use think\Cache;
 
@@ -160,9 +161,21 @@ class ProductController extends Controller
         $info = $file->validate(['size' => 1*1024*1024,'ext' => 'jpg,png,gif'])->move(ROOT_PATH.'public/upload/product');
         if ($info)
         {
+            //生成缩略图
+            $image = Image::open(ROOT_PATH.'public/upload/product/'.$info->getSaveName());
+            $thumb_file = ROOT_PATH.'public/upload/'.dirname($info->getSaveName()).'/thumb_'.$info->getFilename();
+            //目录不存在，则创建目录
+
+            if (!is_dir(dirname($thumb_file)))
+            {
+                mkdir(dirname($thumb_file),0755,true);
+            }
+            $image->thumb(360,360,Image::THUMB_FILLED)->save($thumb_file);
+
             //上传成功
             return [
-                'success' => 'success'
+                'image' => ROOT_PATH.'public/upload/product/'.$info->getSaveName(),
+                'thumb' => $thumb_file
             ];
         }else{
             return [

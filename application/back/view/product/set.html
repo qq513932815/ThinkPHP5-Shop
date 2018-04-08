@@ -91,7 +91,7 @@
                                 <input id="fileupload" type="file" name="file">
                             </span>
                                 <input type="hidden" name="image" value="" id="input-image" class="form-control">
-                                <input type="hidden" name="image_thumb" value="" id="input-image-thumb" class="form-control">
+                                <input type="hidden" name="image_thumb" value="" id="input-image_thumb" class="form-control">
                                 <label for="" class="" style="display: none; color: red;" id="label-file-error"></label>
                         </div>
                         <div class="form-group required">
@@ -313,6 +313,7 @@
                     $("#label-file-error").text(data.result.error).show();
                 }else{
                     $("#label-file-error").text('').hide();
+                    //赋值到上面的input去
                 }
             }
         }).prop('disabled', !$.support.fileInput)

@@ -9,7 +9,13 @@
 namespace app\api\controller;
 
 
-class ProductController
-{
+use think\Controller;
 
+class ProductController extends Controller
+{
+    public function listAction()
+    {
+        $data = ['success' => 'ok','msg' => '666'];
+        return json($data);
+    }
 }

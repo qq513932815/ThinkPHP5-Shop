@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<!--[if IE]>
+<![endif]-->
+<!--[if IE 8 ]>
+<html dir="ltr" lang="zh-CN" class="ie8">
+<![endif]-->
+<!--[if IE 9 ]>
+<html dir="ltr" lang="zh-CN" class="ie9">
+<![endif]-->
+<!--[if (gt IE 9)|!(IE)]>
+<!-->
+<html dir="ltr" lang="zh-CN">
+<!--<![endif]-->
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>省钱购</title>
+    <meta name="description" content="BuyPlus(败家Shopping）"/>
+    <meta name="keywords" content="BuyPlus(败家Shopping）"/>
+    <link href="__STATIC__/image/cart.png" rel="icon"/>
+    <link href="__STATIC__/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <link href="__STATIC__/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+    <link href="__STATIC__/index/css/stylesheet.css" rel="stylesheet">
+    <script src="__STATIC__/jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="__STATIC__/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script src="__STATIC__/index/js/config.js" type="text/javascript"></script>
+
+    <!--初始化一些，从模板中得到的内容-->
+    <script>
+        // config.path.thumb = '/thumb/';
+    </script>
+
+
+    <link href="__STATIC__/owl-carousel/owl.carousel.css" type="text/css" rel="stylesheet" media="screen" />
+    <link href="__STATIC__/owl-carousel/owl.transitions.css" type="text/css" rel="stylesheet" media="screen" />
+
+</head>
+<body class="common-home">
+
+{include file="index@common/nav" /}
+{include file="index@common/header" /}
+{include file="index@common/menu" /}
+{block name="content"}{/block}
+{include file="index@common/footer" /}
+
+<script src="__STATIC__/index/js/common.js" type="text/javascript"></script>
+<script src="__STATIC__/index/js/cart.js" type="text/javascript"></script>
+<script>
+    $(function() {
+        // 页面加载执行购物车刷新
+        // cart.minicartRefresh();
+    });
+</script>
+
+<script src="__STATIC__/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
+
+<!--幻灯片-->
+<script>
+    $(function () {
+        $('#slideshow0').owlCarousel({
+            items: 1, //显示数量
+            loop: true, //循环滚动
+            autoplay: true, //自动播放
+            autoplayTimeout: 3000, //自动切换时间（毫秒）
+            autoplayHoverPause: true, //鼠标移动到图片上面时，是否暂停自动播放
+            autoplaySpeed: 300, //自动播放图片切换动画时长
+            navSpeed: 400, //左右切换按钮图片切换动画时长
+            dotsSpeed: 300, //点击图片下方黑点图片切换动画时长
+            nav: true, //是否显示左右切换按钮
+            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'], //左右切换按钮图标
+            dots: true, //是否显示图片下方黑点
+        });
+    });
+</script>
+
+<!--最新商品-->
+<script>
+    $(function() {
+
+        var url = config.site.urlRoot + 'products.html';
+        var data = {
+            type: 'new', // 获取最新商品
+            limit: 4
+        };
+        $.get(url, data, function(resp) {
+            $('#row-product-new').empty();
+            $.each(resp.data, function(i, product) {
+                var html = '';
+                html += '<div class="product-layout product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12">';
+                html += '<div class="product-wrapper">';
+                html += '<div class="product-image">';
+                html += '<a href="">';
+                html += '<img src="/thumb/product/'+product.image_thumb+'" alt="产品图像" title="'+product.title+'" class="img-responsive"/>';
+                html += '</a>';
+                html += '</div>';
+                html += '<div class="product-info">';
+                html += '<div class="product-name">';
+                html += '<a href="">'+product.title+'</a>';
+                html += '</div>';
+                html += '<div class="product-description">';
+                html += '<p>..</p>';
+                html += '</div>';
+                html += '<div class="product-rating">';
+                for(var i=1, max=Math.ceil(Math.random()*5); i<=max; ++i) {
+                    html += '<span class="fa fa-stack">';
+                    html += '<i class="fa fa-star fa-stack-2x"></i>';
+                    html += '</span>';
+                }
+                html += '</div>';
+                html += '<div class="product-price">';
+                html += '<span class="price-new">￥'+product.price+'</span>';
+                html += '<span class="price-old">￥'+product.price_origin+'</span>';
+                html += '</div>';
+                html += '<div class="product-action">';
+                html += '<button type="button" class="add-to-cart" data-product_id="'+product.id+'">';
+                html += '<i class="fa fa-shopping-cart"></i>';
+                html += '<span>加入购物车</span>';
+                html += '</button>';
+                html += '<div class="ps-add-buyincang" id="btn-visible">';
+                html += '<button type="button" class="wishlist">';
+                html += '<i class="fa fa-heart-o"></i>';
+                html += '<span>收藏</span>';
+                html += '</button>';
+                html += '<button type="button" class="compare">';
+                html += '<i class="fa fa-bars"></i>';
+                html += '<span>对比</span>';
+                html += '</button>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                html += '</div>';
+                $('#row-product-new').append(html);
+            });
+
+        }, 'json');
+    });
+</script>
+
+<!--添加到购物车-->
+<script>
+    $(function() {
+        // 全部的添加按钮
+        $('body').on('click', 'button.add-to-cart', function() {
+            // 添加到购物车
+            cart.add({
+                product_id: $(this).data('product_id'),
+                buy_quantity: '1',
+                success: function() {
+                    // 刷新迷你购物车
+                    cart.minicartRefresh();
+                }
+            });
+        });
+    })
+</script>
+
+</body>
+</html>

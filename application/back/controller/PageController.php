@@ -17,6 +17,9 @@ class PageController extends Controller
     {
         //通过后台生成静态页面
 
-        $content = $this->fetch();
+        $content = $this->fetch('index@site/index');
+
+        file_put_contents(ROOT_PATH.'public/html/index.html',$content);
+        echo '生成成功';
     }
 }

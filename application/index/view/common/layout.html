@@ -80,7 +80,7 @@
 <script>
     $(function() {
 
-        var url = config.site.urlRoot + 'products.html';
+        var url = config.site.urlRoot + '/products.html';
         var data = {
             type: 'new', // 获取最新商品
             limit: 4
@@ -112,7 +112,7 @@
                 html += '</div>';
                 html += '<div class="product-price">';
                 html += '<span class="price-new">￥'+product.price+'</span>';
-                html += '<span class="price-old">￥'+product.price_origin+'</span>';
+                html += '<span class="price-old">￥'+product.price_orign+'</span>';
                 html += '</div>';
                 html += '<div class="product-action">';
                 html += '<button type="button" class="add-to-cart" data-product_id="'+product.id+'">';

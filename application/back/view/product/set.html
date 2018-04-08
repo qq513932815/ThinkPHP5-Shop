@@ -314,6 +314,8 @@
                 }else{
                     $("#label-file-error").text('').hide();
                     //赋值到上面的input去
+                    $("#input-image").val(data.result.image);
+                    $("#input-image_thumb").val(data.result.thumb);
                 }
             }
         }).prop('disabled', !$.support.fileInput)

@@ -93,7 +93,7 @@
                 html += '<div class="product-wrapper">';
                 html += '<div class="product-image">';
                 html += '<a href="">';
-                html += '<img src="/thumb/product/'+product.image_thumb+'" alt="产品图像" title="'+product.title+'" class="img-responsive"/>';
+                html += '<img  src="/static/image/banner/banner-1.jpg" alt="产品图像" title="'+product.title+'" class="img-responsive"/>';
                 html += '</a>';
                 html += '</div>';
                 html += '<div class="product-info">';
@@ -155,6 +155,10 @@
                 if (resp.success)
                 {
                     //获取购物车中所有商品
+                    var cart_info = config.site.urlRoot + '/cart-info.html';
+                    $.get(cart_info,[],function (resp) {
+                        console.log(resp);
+                    },'json');
                     alert('添加成功');
                 }else{
                     alert('添加失败');

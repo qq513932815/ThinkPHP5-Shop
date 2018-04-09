@@ -21,4 +21,12 @@ class CartController extends Controller
             'success' => 'ok'
         ];
     }
+
+    //获取购物车中商品
+    public function infoAction()
+    {
+
+        $product_list = Cart::getInstance()->exportInfo();
+        return $product_list;
+    }
 }

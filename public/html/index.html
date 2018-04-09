@@ -1058,7 +1058,17 @@
                 buy_quantity:1
             };
             $.post(url,data,function (resp) {
-                console.log(resp);
+                if (resp.success)
+                {
+                    //获取购物车中所有商品
+                    var cart_info = config.site.urlRoot + '/cart-info.html';
+                    $.get(cart_info,[],function (resp) {
+                        console.log(resp);
+                    },'json');
+                    alert('添加成功');
+                }else{
+                    alert('添加失败');
+                }
             })
 
             // cart.add({

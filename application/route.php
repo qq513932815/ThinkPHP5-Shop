@@ -17,5 +17,6 @@ return [
         ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
         ':name' => ['index/hello', ['method' => 'post']],
     ],
-    'products' => 'api/product/list'
+    'products' => 'api/product/list',
+    'cart-add' => 'index/cart/add'
 ];

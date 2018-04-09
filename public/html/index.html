@@ -1052,14 +1052,23 @@
         // 全部的添加按钮
         $('body').on('click', 'button.add-to-cart', function() {
             // 添加到购物车
-            cart.add({
-                product_id: $(this).data('product_id'),
-                buy_quantity: '1',
-                success: function() {
-                    // 刷新迷你购物车
-                    cart.minicartRefresh();
-                }
-            });
+            var url = config.site.urlRoot + '/cart-add.html';
+            var data = {
+                product_id : $(this).data('product_id'),
+                buy_quantity:1
+            };
+            $.post(url,data,function (resp) {
+                console.log(resp);
+            })
+
+            // cart.add({
+            //     product_id: $(this).data('product_id'),
+            //     buy_quantity: '1',
+            //     success: function() {
+            //         // 刷新迷你购物车
+            //         cart.minicartRefresh();
+            //     }
+            // });
         });
     })
 </script>

@@ -139,7 +139,7 @@
                                     <input type="checkbox" name="selected[]" value="{$item->id}"/>
                                 </td>
 
-                                                        <td class="text-left">{$item->title}</td>                        <td class="text-left">{$item->upc}</td>                        <td class="text-left">{$item->image}</td>                        <td class="text-left">{$item->inventory}</td>                        <td class="text-left">{$item->mininum}</td>                        <td class="text-left">{$item->price}</td>                        <td class="text-left">{$item->price_orign}</td>                        <td class="text-left">{$item->is_shopping}</td>                        <td class="text-left">{$item->date_avaliable}</td>                        <td class="text-left">{$item->status}</td>
+                                                        <td class="text-left">{$item->title}</td>                        <td class="text-left">{$item->upc}</td>                        <td class="text-left"><img src="http://www.myshop.com/{$item->image}" height="50"></td>                        <td class="text-left">{$item->inventory}</td>                        <td class="text-left">{$item->mininum}</td>                        <td class="text-left">{$item->price}</td>                        <td class="text-left">{$item->price_orign}</td>                        <td class="text-left">{$item->is_shopping}</td>                        <td class="text-left">{$item->date_avaliable}</td>                        <td class="text-left">{$item->status}</td>
 
                                 <td class="text-right">
                                     <a href="{:url('set',['id'=>$item->id])}" data-toggle="tooltip" title="编辑"

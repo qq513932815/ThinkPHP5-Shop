@@ -164,6 +164,7 @@ class ProductController extends Controller
             //生成缩略图
             $image = Image::open(ROOT_PATH.'public/upload/product/'.$info->getSaveName());
             $thumb_file = ROOT_PATH.'public/upload/'.dirname($info->getSaveName()).'/thumb_'.$info->getFilename();
+            $return_thumb_file = '/upload/'.dirname($info->getSaveName()).'/thumb_'.$info->getFilename();
             //目录不存在，则创建目录
 
             if (!is_dir(dirname($thumb_file)))
@@ -174,8 +175,8 @@ class ProductController extends Controller
 
             //上传成功
             return [
-                'image' => ROOT_PATH.'public/upload/product/'.$info->getSaveName(),
-                'thumb' => $thumb_file
+                'image' => '/upload/product/'.$info->getSaveName(),
+                'thumb' => $return_thumb_file
             ];
         }else{
             return [

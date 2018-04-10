@@ -34,7 +34,7 @@ class ProductController extends Controller
         $status = 1;
         $result = $product->where([
             'status' => $status
-        ])->paginate($limit);
+        ])->order('id desc')->paginate($limit);
         return json($result);
     }
 }
